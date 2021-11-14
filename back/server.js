@@ -1,5 +1,9 @@
 import app from './app.js'
+import config from './config/index.js'
 
-app.listen(3000, (req, res, next) => {
-    console.log('hi')
+
+const { PORT } = config; 
+
+app.listen(PORT, (req, res, next) => {
+    console.log(`port: ${PORT}`)
 })
