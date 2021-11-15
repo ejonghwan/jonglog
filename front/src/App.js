@@ -1,9 +1,19 @@
+import React from 'react';
+import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'connected-react-router'
 
-function App() {
+import store, { history } from './store.js'
+import Router from './routes/Router.js'
+
+
+
+const App = () => {
   return (
-    <div className="App">
-      app
-    </div>
+    <Provider store={store}>
+      <ConnectedRouter history={history}>
+          <Router />
+      </ConnectedRouter>
+    </Provider>
   );
 }
 

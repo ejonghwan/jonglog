@@ -1,7 +1,6 @@
 {
   "name": "back",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -23,5 +22,14 @@
   "devDependencies": {
     "morgan": "^1.10.0",
     "nodemon": "^2.0.15"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ejonghwan/jonglog.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ejonghwan/jonglog/issues"
+  },
+  "homepage": "https://github.com/ejonghwan/jonglog#readme",
+  "description": ""
 }
