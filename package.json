@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon ./back/server.js"
+    "dev": "nodemon ./back/server.js --ignore './front"
   },
   "author": "",
   "license": "ISC",

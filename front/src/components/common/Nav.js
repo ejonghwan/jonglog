@@ -1,6 +1,8 @@
 import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import LoginModal from '../auth/LoginModal.js'
+
 
 const Nav = () => {
 
@@ -14,20 +16,13 @@ const Nav = () => {
                         {/* <Link to="/">jonglog</Link> */}
                         <a href="/">jonglog</a>
                     </li>
-                     {isOpen === true ? (
+                     {isOpen === false ? (
                          <Fragment>
-                            <li>
-                                {/* <Link to="/login">login</Link> */}
-                                <a href="/login">login</a>
-                            </li>
-                            <li>
-                                {/* <Link to="/signup">signup</Link> */}
-                                <a href="/signup">signup</a>
-                            </li>
+                           auth link
                         </Fragment>
                      ) : (
                          <Fragment>
-                            'nononono'
+                            <LoginModal />
                         </Fragment>
                      )}
                     
