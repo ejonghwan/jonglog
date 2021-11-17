@@ -1,13 +1,15 @@
 import {
     LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE,
-    CLEAR_ERROR_REQUEST, CLEAR_ERROR_SUCCESS, CLEAR_ERROR_FAILURE
+    CLEAR_ERROR_REQUEST, CLEAR_ERROR_SUCCESS, CLEAR_ERROR_FAILURE, 
+    LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE,
+
 } from '../types.js'
 
 
 
 const initialState = {
     token: localStorage.getItem('token'),
-    isAuthhenticated: null,
+    isAuthenticated: null,
     isLoading: false,
     user: '',
     userId: '',
@@ -21,24 +23,29 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
     switch(action.type) {
+        
         case LOGIN_REQUEST: 
+        case LOGOUT_REQUEST:
             return {
                 ...state,
                 errorMsg: '',
                 isLoading: true,
             }
         case LOGIN_SUCCESS: 
-            localStorage.setItem(action.payload.token);
+            localStorage.setItem('token', action.payload.token);
+            // console.log('reducer data', action.payload)
             return {
                 ...state,
                 ...action.payload,
                 isAuthhenticated: true,
                 isLoading: false,
-                userId: action.payload.user.id,
+                // userId: action.payload.user.id,
+                userId: 'asdalkdjlkajsdklad',
                 userRole: action.payload.user.role,
                 errorMsg: '',
             }
         case LOGIN_FAILURE: 
+        case LOGOUT_FAILURE:
             localStorage.removeItem('token');
             return {
                 ...state,
@@ -46,12 +53,25 @@ const reducer = (state = initialState, action) => {
                 token: null,
                 user: null,
                 userId: null,
-                isAuthhenticated: false,
+                isAuthenticated: false,
                 isLoading: false,
                 userRole: null,
-                errorMsg: action.payload.data.msg,
+                errorMsg: action.payload,
+            }
+
+        case LOGOUT_SUCCESS: 
+            localStorage.removeItem('token');
+            return {
+                token: null,
+                user: null,
+                userId: null,
+                isAuthenticated: false,
+                isLoading: false,
+                userRole: null,
+                errorMsg: '',
             }
         
+
         case CLEAR_ERROR_REQUEST: 
             return {
                 ...state,

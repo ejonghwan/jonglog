@@ -6,7 +6,8 @@ import authSaga from './authSaga.js'
 
 
 
-axios.defaults.baseURL = process.env.REACT_APP_BASIC_SERVER_URL
+// axios.defaults.baseURL = process.env.REACT_APP_BASIC_SERVER_URL
+axios.defaults.baseURL = 'http://localhost:3000'
 
 export default function* rootSaga() {
     yield all([
