@@ -1,6 +1,6 @@
 import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, Route } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom';
 import { LOGOUT_REQUEST } from '../../redux/types.js';
 
 import LoginModal from '../auth/LoginModal.js'
@@ -14,7 +14,7 @@ const Nav = () => {
     const [ isOpen, setIsOpen ] = useState(false);
     const { isAuthenticated, user, userRole, userId } = useSelector(state => state.user)
 
-    console.log(user, 'user')
+    // console.log(user, 'user')
 
 
     const dispatch = useDispatch()
@@ -30,33 +30,38 @@ const Nav = () => {
     // }, [])
 
     useEffect(() => {
-        console.log('asdkladlkqwjodqdq',userId)
+        // console.log('asdkladlkqwjodqdq',userId)
     }, [userId])
+
+
+    const addPostClick = e => {
+        // console.log(11)
+    }
+
+    
 
 
     const authLink = (
         <Fragment>
-            {userRole === "mainJuin" ? (
-                <form>
-                    <a href="/posts" onClick={addPostClick}>add post</a>
-                </form>
+            {userRole === "MainJuin" ? (
+                <Fragment>
+                    <Link to="/posts" onClick={addPostClick}>add post</Link>
+                    <Routes>
+                        <Route path="/posts" component={SignupModal} />
+                    </Routes>
+                </Fragment>
             ) : (
-                <form>
+                <Fragment>
                     {user && user.name ? (
-                        <a href="">
-                            <Link to="/posts">
-                                <button>
-                                    {user ? `welcom ${user.name }` : ""}
-                                </button>
-                            </Link>
-                            <Route path="/posts" component={SignupModal} />
-                        </a>
+                        <Fragment>
+                            {user ? `welcom ${user.name }` : ""}
+                        </Fragment>
                     ) : (
                         <button>
                             no user
                         </button>
                     )}
-                </form>
+                </Fragment>
                 
             )}
             <button onClick={logout}>logout</button>
@@ -71,11 +76,6 @@ const Nav = () => {
     )
 
     
-    const addPostClick = e => {
-        console.log(11)
-    }
-
-    
     return (
         <Fragment>
             <nav>
@@ -84,7 +84,7 @@ const Nav = () => {
                         {/* <Link to="/">jonglog</Link> */}
                         <a href="/">jonglog</a>
                     </li>
-                     {userId ? authLink : guestLink}
+                     {user ? authLink : guestLink}
                 
                 </ul>
             </nav>

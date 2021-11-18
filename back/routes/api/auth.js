@@ -57,6 +57,10 @@ router.post('/logout', (req, res) => {
     res.json("로그아웃")
 })
 
+
+// @routes   POST api/auth/user
+// @desc     load user
+// @access   public
 router.get('/user', auth, async(req, res) => {
     try{
         

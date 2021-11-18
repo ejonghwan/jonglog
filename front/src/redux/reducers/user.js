@@ -1,7 +1,8 @@
 import {
     LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE,
     CLEAR_ERROR_REQUEST, CLEAR_ERROR_SUCCESS, CLEAR_ERROR_FAILURE, 
-    LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE,
+    LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE, 
+    USER_LOAD_REQUEST, USER_LOAD_SUCCESS, USER_LOAD_FAILURE, SIGNUP_REQUEST, SIGNUP_SUCCESS, SIGNUP_FAILURE,
 
 } from '../types.js'
 
@@ -39,8 +40,7 @@ const reducer = (state = initialState, action) => {
                 ...action.payload,
                 isAuthhenticated: true,
                 isLoading: false,
-                // userId: action.payload.user.id,
-                userId: 'asdalkdjlkajsdklad',
+                userId: action.payload.user.id,
                 userRole: action.payload.user.role,
                 errorMsg: '',
             }
@@ -71,6 +71,51 @@ const reducer = (state = initialState, action) => {
                 errorMsg: '',
             }
         
+        case USER_LOAD_REQUEST: 
+            return {
+                ...state,
+                isloading: true,
+            }
+        case USER_LOAD_SUCCESS: 
+            return {
+                ...state,
+                isloading: false,
+                isAuthenticated: true,
+                user: action.payload,
+                userId: action.payload.id,
+                userName: action.payload.name,
+                userRole: action.payload.role,
+            }
+        case USER_LOAD_FAILURE: 
+            return {
+                ...state,
+                user: null,
+                isAuthenticated: false,
+                isLoading: false,
+                userRole: null,
+                errorMsg: null,
+            }
+
+        case SIGNUP_REQUEST: 
+            return {
+                ...state,
+                isloading: true,
+            }
+        case SIGNUP_SUCCESS: 
+            return {
+                ...state,
+                isloading: false,
+                // email: action.payload.email,
+                // name: action.payload.name,
+                // password: action.payload.password,
+            }
+        case SIGNUP_FAILURE: 
+            return {
+                ...state,
+                isloading: false,
+            }
+
+
 
         case CLEAR_ERROR_REQUEST: 
             return {

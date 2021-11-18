@@ -35,7 +35,7 @@ const SignupModal = () => {
 
 
     const handleChange = e => {
-        e.preventDfault();
+        e.preventDefault();
         setValue({
             ...form,
             [e.target.name]: e.target.value,
@@ -47,7 +47,7 @@ const SignupModal = () => {
         const { name, email, password } = form;
         const newUser = { name, email, password };
 
-        console.log(newUser, "modal newUser");
+        // console.log(newUser, "modal newUser");
 
         dispatch({
             type: SIGNUP_REQUEST,
@@ -61,12 +61,12 @@ const SignupModal = () => {
             {modal && (
                 <form onSubmit={handleSubmit}>
                     <div>
-                        <label htmlFor="name">name</label>
-                        <input id="name" name="name" type="text" onChange={handleChange}/>
-                    </div>
-                    <div>
                         <label htmlFor="email">email</label>
                         <input id="email" name="email" type="text" onChange={handleChange}/>
+                    </div>
+                    <div>
+                        <label htmlFor="name">name</label>
+                        <input id="name" name="name" type="text" onChange={handleChange}/>
                     </div>
                     <div>
                         <label htmlFor="password">password</label>
