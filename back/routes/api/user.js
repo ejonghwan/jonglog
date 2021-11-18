@@ -15,7 +15,7 @@ const router = express.Router()
 // @routes   GET api/user
 // @desc     GET all userInfo
 // @access   public
-router.get('/', async (req, res, next) => {
+router.get('/', async (req, res) => {
 
     try{
         const users = await User.find();

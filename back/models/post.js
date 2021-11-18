@@ -17,7 +17,7 @@ const PostSchema = new Schema({
         type: Number,
         default: -2, //처음 작성한 사람의 조회가 집계돼서 -2로  
     },
-    filuUrl: {
+    fileUrl: {
         type: String,
         default: "https://source.unsplash.com/random/301x201",
     },
