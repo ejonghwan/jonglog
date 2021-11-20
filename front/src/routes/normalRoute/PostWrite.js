@@ -1,9 +1,102 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { CKEditor } from '@ckeditor/ckeditor5-react'
+import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor'
+import { editorConfiguration } from '../../components/editor/Edit.js'
+import Myinit from '../../components/editor/UploadAdapter.js';
+
+
+
 
 const PostWrite = () => {
+
+    const { isAuthenticated } = useSelector(state => state.user)
+    const [ form, setValues ] = useState({ title: "", contents: "", fileUrl: "" })
+    const dispatch = useDispatch();
+
+    const handleChange = e => {
+        setValues({
+            ...form,
+            [e.target.name]: e.target.value,
+        })
+    }
+
+    const handleSubmit = e => {
+        e.preventDefault();
+        const { title, contents, fileUrl, category } = form
+
+    }
+
+    const getDataFromCKEditor = (event, editor) => {
+        console.log('editor')
+        const data = editor.getData();
+        console.log(data)
+
+        if(data && data.match("<img src=")) {
+            const whereImg_start = data.indexOf("<img src=")
+            console.log(whereImg_start)
+            let whereImg_end = ""
+            let ext_name_find = ""
+            let result_img_url = ""
+            const ext_name = ["jpeg", "png", "jpg", "gif", ]
+
+            for(let i = 0; i < ext_name.length; i++) {
+                if(data.match(ext_name[i])) {
+                    console.log(data.indexOf(`${ext_name[i]}`))
+                    ext_name_find = ext_name[i];
+                    whereImg_end = data.indexOf(`${ext_name[i]}`);
+
+                }
+            }
+
+            console.log(ext_name_find)
+            console.log(whereImg_end)
+
+            if(ext_name_find === "jpeg") {
+                result_img_url = data.substring(whereImg_start + 10, whereImg_end + 4)
+            } else {
+                result_img_url = data.substring(whereImg_start + 10, whereImg_end + 3)
+            }
+        }
+    }
+
     return (
         <Fragment>
-            PostWrite
+            asdasdas
+            { isAuthenticated ? (
+                <Fragment>
+                    <form onSubmit={handleSubmit}>
+                        <div>
+                            <label htmlFor="title">title</label>
+                            <input type="text" name="title" id="title" onChange={handleChange} />
+                        </div>
+                        <div>
+                            <label htmlFor="category">category</label>
+                            <input type="text" name="category" id="category" onChange={handleChange} />
+                        </div>
+                        <div>
+                            <label htmlFor="contents">contents</label>
+                           <CKEditor 
+                                editor={ClassicEditor}
+                                config={editorConfiguration}
+                                onInit={Myinit}
+                                onBlur={getDataFromCKEditor}
+                           />
+                        </div>
+                        {/* <div>
+                            <label htmlFor="fileUrl">fileUrl</label>
+                            <input type="text" name="fileUrl" id="fileUrl" onChange={handleChange} />
+                        </div> */}
+                       
+                        <button type="submit">제출!!</button>
+                    </form>
+                </Fragment>
+                ) : (
+                <Fragment>
+                    loading bar
+                </Fragment>
+                ) }
+            {/* <Edit /> */}
         </Fragment>
     )
 }

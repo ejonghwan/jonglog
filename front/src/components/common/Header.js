@@ -4,7 +4,9 @@ import Nav from './Nav.js'
 const Header = () => {
     return (
         <header>
-           <Nav />
+            <article className="section_wrap">
+                <Nav />
+           </article>
         </header>
     )
 }

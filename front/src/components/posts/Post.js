@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMouse } from '@fortawesome/free-solid-svg-icons'
+import { faMouse, faEye } from '@fortawesome/free-solid-svg-icons'
 
 
 const Post = ({ posts }) => {
@@ -13,7 +13,7 @@ const Post = ({ posts }) => {
         <Fragment>
             post
             
-            <ul>
+            <ul className="main_card_list">
             {
                 Array.isArray(posts) ? posts.map(({ _id, title, fileUrl, comments, views }) => {
                     return (
@@ -24,7 +24,7 @@ const Post = ({ posts }) => {
                                 </div>
                                 <div>
                                     <h3>{title}</h3>
-                                    <FontAwesomeIcon icon={faMouse} />
+                                    <FontAwesomeIcon icon={faEye} />
                                     &nbsp;
                                     <span>{views}</span>
                                 </div>

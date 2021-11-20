@@ -3,6 +3,7 @@ import { Routes, Router, Route, Navigate } from 'react-router-dom';
 
 import Header from '../components/common/Header.js'
 import Footer from '../components/common/Footer.js'
+import Main from '../components/common/Main'
 
 import CategoryRoute from './normalRoute/CategoryRoute'
 import PostCard from './normalRoute/PostCard'
@@ -17,10 +18,12 @@ const RouterPage = () => {
     return(
         <Fragment>
             <Header />
-            <h1>router</h1>
 
+            <PostEdit />
+            
             <Routes>
-                <Route path="/" element={<PostCardList />}></Route>
+               
+                <Route path="/" element={<Main />}></Route>
                 <Route path="/post/category/:categoryName" element={<CategoryRoute />}></Route>
                 <Route path="/post/:id" element={<PostCard />}></Route>
                

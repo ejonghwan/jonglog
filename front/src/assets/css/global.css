@@ -1,0 +1,91 @@
+
+@font-face {
+    font-family: 'ari-Bold';
+    src: local(※);
+    src: url('../font/ari-Bold.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ari-Light';
+    src: local(※);
+    src: url('../font/ari-Light.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'ari-Medium';
+    src: local(※);
+    src: url('../font/ari-Medium.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'ari-SemiBold';
+    src: local(※);
+    src: url('../font/ari-SemiBold.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'ari-Thin';
+    src: local(※);
+    src: url('../font/ari-Thin.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+
+
+/* reset */
+* { margin:0; padding:0; box-sizing: border-box; }
+ul, ol {list-style: none;}
+
+
+
+/* global */
+html {font-size: 10px;}
+body {font-size: 1.5rem;}
+
+html, body {width: 100%; height: 100%; font-family: "ari-Medium"; color: #444; line-height: 2.3rem;}
+img {width: 100%;;}
+.section_wrap {width: 980px; margin: 0 auto; padding: 40px 0; }
+a {text-decoration: none; color: #444;}
+
+
+main {  border: 1px solid #ddd;}
+main .main_card_list {display: flex; flex-wrap: wrap; margin: -5px;;}
+main .main_card_list > li {flex: 1 1 auto; width: calc(25% - 10px); border: 1px solid #ddd; margin: 5px;}
+main .card_list { min-height: 80vh;; }
+
+/* footer */
+footer {background: rgb(44, 52, 70); color: #fff; }
+
+
+
+
+/* CKEditor */
+.ck .ck-editor{
+    min-width: 100%;
+}
+
+.ck-editor__editable {
+    max-height: 80rem;
+    min-height: 20rem;
+    min-width: 100rem;
+}
+
+.ck-editor__editable__inline {
+    max-height: 80rem;
+    min-height: 20rem;
+    min-width: 100%;
+}

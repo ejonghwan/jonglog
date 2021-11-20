@@ -5,6 +5,8 @@ import { ConnectedRouter } from 'connected-react-router'
 import store, { history } from './store.js'
 import RouterPage from './routes/RouterPage.js'
 
+import './assets/css/global.css'
+
 
 
 const App = () => {

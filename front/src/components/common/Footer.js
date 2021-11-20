@@ -11,7 +11,10 @@ const Footer = () => {
 
     return (
         <footer>
-            Copyright &copy {thisYear()}
+            <article className="section_wrap">
+                Copyright &copy {thisYear()}<br />
+                @font - Arita Typeface
+            </article>
         </footer>
     )
 }
