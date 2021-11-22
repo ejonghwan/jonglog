@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment,  } from 'react';
 import { Routes, Router, Route, Navigate } from 'react-router-dom';
 
 import Header from '../components/common/Header.js'
@@ -6,7 +6,7 @@ import Footer from '../components/common/Footer.js'
 import Main from '../components/common/Main'
 
 import CategoryRoute from './normalRoute/CategoryRoute'
-import PostCard from './normalRoute/PostCard'
+import PostPage from './normalRoute/PostPage'
 import PostCardList from './normalRoute/PostCardList'
 import PostEdit from './normalRoute/PostEdit'
 import PostWrite from './normalRoute/PostWrite'
@@ -18,14 +18,12 @@ const RouterPage = () => {
     return(
         <Fragment>
             <Header />
-
-            <PostEdit />
             
             <Routes>
                
                 <Route path="/" element={<Main />}></Route>
                 <Route path="/post/category/:categoryName" element={<CategoryRoute />}></Route>
-                <Route path="/post/:id" element={<PostCard />}></Route>
+                <Route path="/post/:id" element={<PostPage />}></Route>
                
                 <Route path="/post" element={<PostWrite />}></Route>
                 {/* <Route path="/" element={Profile}></Route> */}

@@ -6,6 +6,8 @@ import { editorConfiguration } from '../../components/editor/Edit.js'
 import Myinit from '../../components/editor/UploadAdapter.js';
 
 
+import dotenv from 'dotenv';
+dotenv.config();
 
 
 const PostWrite = () => {
@@ -57,6 +59,21 @@ const PostWrite = () => {
             } else {
                 result_img_url = data.substring(whereImg_start + 10, whereImg_end + 3)
             }
+
+            console.log(result_img_url, 'result !!!??')
+
+            setValues({
+                ...form,
+                fileUrl: result_img_url,
+                contents: data,
+            })
+        } else {
+            //사진 파일 안넣는경우
+            setValues({
+                ...form,
+                fileUrl: `${process.env.REACT_APP_BASIC_IMGFILE_URL}/imgs2.jpeg`,
+                contents: data,
+            })
         }
     }
 
