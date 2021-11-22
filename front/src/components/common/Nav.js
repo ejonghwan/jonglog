@@ -45,7 +45,7 @@ const Nav = () => {
         <Fragment>
             {userRole === "MainJuin" ? (
                 <Fragment>
-                    <Link to="/posts" onClick={addPostClick}>add post</Link>
+                    <Link to="/post" onClick={addPostClick}>add post</Link>
                     <Routes>
                         <Route path="/posts" component={SignupModal} />
                     </Routes>

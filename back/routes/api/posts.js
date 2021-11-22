@@ -71,7 +71,7 @@ router.get('/', async (req, res, next) => {
 // @routes   POST api/post
 // @desc     Create a Post
 // @access   private
-router.post('/', auth, uploadS3.none(),async (req, res, next) => {
+router.post('/', auth, uploadS3.none(), async (req, res, next) => {
     try {
         console.log(req, '이거 꼭 확인 아이디 req')
 
@@ -80,8 +80,8 @@ router.post('/', auth, uploadS3.none(),async (req, res, next) => {
             title,
             contents,
             fileUrl,
-            creator,
-            data: moment.format('YYYY-MM-DD hh:mm:ss')
+            creator: req.user.id,
+            date: moment.format('YYYY-MM-DD hh:mm:ss')
         });
 
         const findCaterory = await Category.findOne({
@@ -119,7 +119,8 @@ router.post('/', auth, uploadS3.none(),async (req, res, next) => {
             })
         }
         
-        return res.redirect(`/api/post/${newPost._id}`)
+        // return res.redirect(`/api/post/${newPost._id}`)
+        return res.json(newPost)
 
         // res.json(newPost)
 
@@ -135,6 +136,10 @@ router.post('/', auth, uploadS3.none(),async (req, res, next) => {
 router.get('/:id', async(req, res, next) => {
     try {
         const post = await Post.findById(req.params.id).populate('creator', 'name').populate({ path: 'category', select: 'categoryName' }) //populate는 모델에 있는 object.id로 연결되어있는 것들을?  만들어달란 요청 ?
+        post.views += 1
+        post.save()
+        console.log(post);
+        res.json(post)
     } catch(err) {
         console.error(err);
         next(err)

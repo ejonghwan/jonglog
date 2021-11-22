@@ -14,8 +14,8 @@ const PostPage = (req) => {
     const { postDetail, creatorId, title, loading } = useSelector(state => state.posts)
     const { userId, userName } = useSelector(state => state.user)
 
-    console.log(params.id)
-    console.log(ma)
+    // console.log(params.id)
+    // console.log(ma)
 
     useEffect(() => {
         dispatch({
@@ -32,7 +32,7 @@ const PostPage = (req) => {
         dispatch({
             type: POST_DELETE_REQUEST,
             data: {
-                // id: req.match.params.id,
+                id: params.id,
                 token: localStorage.getItem('token')
             }
         })
@@ -42,17 +42,16 @@ const PostPage = (req) => {
         <Fragment>
             <Link to="/">home</Link>
             <Link to={`/post/${params.id}/edit`}>edit post</Link>
-            <button>delete</button>
+            <button onClick={handleDelete}>delete</button>
         </Fragment>
     )
 
     const HomeButton = (
         <Fragment>
             <Link to="/">home</Link>
-            {/* <Link to={`/post/${req.match.params.id}/edit`}>edit post</Link> */}
-            <button>delete</button>
         </Fragment>
     )
+    console.log(title)
 
     return (
         <Fragment>

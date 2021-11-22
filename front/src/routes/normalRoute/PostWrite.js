@@ -7,13 +7,14 @@ import Myinit from '../../components/editor/UploadAdapter.js';
 
 
 import dotenv from 'dotenv';
+import { UPLOAD_POST_REQUEST } from '../../redux/types.js';
 dotenv.config();
 
 
 const PostWrite = () => {
 
     const { isAuthenticated } = useSelector(state => state.user)
-    const [ form, setValues ] = useState({ title: "", contents: "", fileUrl: "" })
+    const [ form, setValues ] = useState({ title: "", contents: "", fileUrl: "", category: "", })
     const dispatch = useDispatch();
 
     const handleChange = e => {
@@ -26,55 +27,97 @@ const PostWrite = () => {
     const handleSubmit = e => {
         e.preventDefault();
         const { title, contents, fileUrl, category } = form
-
+        dispatch({
+            type: UPLOAD_POST_REQUEST,
+            data: {title, contents, fileUrl, category}
+        })
     }
 
     const getDataFromCKEditor = (event, editor) => {
         console.log('editor')
         const data = editor.getData();
-        console.log(data)
+        console.log('??겟데이터',data)
 
-        if(data && data.match("<img src=")) {
-            const whereImg_start = data.indexOf("<img src=")
-            console.log(whereImg_start)
-            let whereImg_end = ""
-            let ext_name_find = ""
-            let result_img_url = ""
-            const ext_name = ["jpeg", "png", "jpg", "gif", ]
+        // if(data && data.match("<img src=")) {
+        //     const whereImg_start = data.indexOf("<img src=")
+        //     console.log(whereImg_start)
+        //     let whereImg_end = ""
+        //     let ext_name_find = ""
+        //     let result_img_url = ""
+        //     const ext_name = ["jpeg", "png", "jpg", "gif", ]
 
-            for(let i = 0; i < ext_name.length; i++) {
-                if(data.match(ext_name[i])) {
-                    console.log(data.indexOf(`${ext_name[i]}`))
-                    ext_name_find = ext_name[i];
-                    whereImg_end = data.indexOf(`${ext_name[i]}`);
+        //     for(let i = 0; i < ext_name.length; i++) {
+        //         if(data.match(ext_name[i])) {
+        //             console.log(data.indexOf(`${ext_name[i]}`))
+        //             ext_name_find = ext_name[i];
+        //             whereImg_end = data.indexOf(`${ext_name[i]}`);
 
-                }
+        //         }
+        //     }
+
+        //     console.log(ext_name_find)
+        //     console.log(whereImg_end)
+
+        //     if(ext_name_find === "jpeg") {
+        //         result_img_url = data.substring(whereImg_start + 10, whereImg_end + 4)
+        //     } else {
+        //         result_img_url = data.substring(whereImg_start + 10, whereImg_end + 3)
+        //     }
+
+        //     console.log(result_img_url, 'result !!!??')
+
+        //     setValues({
+        //         ...form,
+        //         fileUrl: result_img_url,
+        //         contents: data,
+        //     })
+        // } else {
+        //     //사진 파일 안넣는경우
+        //     setValues({
+        //         ...form,
+        //         fileUrl: `${process.env.REACT_APP_BASIC_IMGFILE_URL}/imgs2.jpeg`,
+        //         contents: data,
+        //     })
+        // }
+
+        if (data && data.match("<img src=")) {
+            const whereImg_start = data.indexOf("<img src=");
+            console.log(whereImg_start);
+            let whereImg_end = "";
+            let ext_name_find = "";
+            let result_Img_Url = "";
+      
+            const ext_name = ["jpeg", "png", "jpg", "gif"];
+      
+            for (let i = 0; i < ext_name.length; i++) {
+              if (data.match(ext_name[i])) {
+                console.log(data.indexOf(`${ext_name[i]}`));
+                ext_name_find = ext_name[i];
+                whereImg_end = data.indexOf(`${ext_name[i]}`);
+              }
             }
-
-            console.log(ext_name_find)
-            console.log(whereImg_end)
-
-            if(ext_name_find === "jpeg") {
-                result_img_url = data.substring(whereImg_start + 10, whereImg_end + 4)
+            console.log(ext_name_find);
+            console.log(whereImg_end);
+      
+            if (ext_name_find === "jpeg") {
+              result_Img_Url = data.substring(whereImg_start + 10, whereImg_end + 4);
             } else {
-                result_img_url = data.substring(whereImg_start + 10, whereImg_end + 3)
+              result_Img_Url = data.substring(whereImg_start + 10, whereImg_end + 3);
             }
-
-            console.log(result_img_url, 'result !!!??')
-
+      
+            console.log(result_Img_Url, "result_Img_Url");
             setValues({
-                ...form,
-                fileUrl: result_img_url,
-                contents: data,
-            })
-        } else {
-            //사진 파일 안넣는경우
+              ...form,
+              fileUrl: result_Img_Url,
+              contents: data,
+            });
+          } else {
             setValues({
-                ...form,
-                fileUrl: `${process.env.REACT_APP_BASIC_IMGFILE_URL}/imgs2.jpeg`,
-                contents: data,
-            })
-        }
+              ...form,
+              fileUrl: `${process.env.REACT_APP_BASIC_IMGFILE_URL}/imgs2.jpeg`,
+              contents: data,
+            });
+          }
     }
 
     return (
