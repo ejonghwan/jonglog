@@ -175,6 +175,7 @@ router.get('/:id/comments', async(req, res) => {
 // @access   private
 router.post(':/id/comments', async(req, res, next) => {
     try {
+        console.log(req.body)
         const createComment = await Comment.create({
             contents: req.body.contents,
             creator: req.body.userId,

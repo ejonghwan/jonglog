@@ -7,14 +7,16 @@ import { CKEditor } from '@ckeditor/ckeditor5-react'
 // import CKEditor from '@ckeditor/ckeditor5-react' 아씨 절대 이렇게 쓰면 안됨 --
 import BallonEditor from '@ckeditor/ckeditor5-editor-balloon/src/ballooneditor'
 import { editorConfiguration } from '../../components/editor/Edit.js';
+import Comments from '../../components/comments/Comments.js';
 
 const PostPage = (req) => {
 
     const params = useParams();
-    const ma = useLocation()
+    // const ma = useLocation()
     const dispatch = useDispatch();
     const { postDetail, creatorId, title, loading } = useSelector(state => state.posts)
     const { userId, userName, isAuthenticated } = useSelector(state => state.user)
+    const { comments } = useSelector(state => state.comment)
 
 
     console.log(postDetail, creatorId, title, loading)
@@ -81,6 +83,28 @@ const PostPage = (req) => {
                             config={editorConfiguration}
                             disabled="true"
                         />
+                        <hr />
+                        <p>!!comment</p>
+                        <div>
+                            {Array.isArray(comments) ? comments.map(({ contents, creator, date, _id, creatorName }) => {
+                                <div key={_id}>
+                                    <div>작성자: {creatorName ? creatorName : creator}</div>
+                                    <div>시간: {date}</div>
+                                    <div>내용: {contents}</div>
+                                </div>
+                            }) : (
+                                <Fragment>
+                                    creator
+                                </Fragment>
+                            ) }
+
+                            
+                            <Comments 
+                                postId={params.id}
+                                userId={userId}
+                                userName={userName}
+                            />
+                        </div>
                     </Fragment>
                 ) : (
                     <Fragment>
