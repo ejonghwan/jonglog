@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect,  } from 'react';
+import React, { Fragment, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import {} from 'react-helmet'
 import { Link, useParams, useLocation } from 'react-router-dom'
@@ -12,8 +12,10 @@ const PostPage = (req) => {
     const ma = useLocation()
     const dispatch = useDispatch();
     const { postDetail, creatorId, title, loading } = useSelector(state => state.posts)
-    const { userId, userName } = useSelector(state => state.user)
+    const { userId, userName, isAuthenticated } = useSelector(state => state.user)
 
+
+    console.log(postDetail, creatorId, title, loading)
     // console.log(params.id)
     // console.log(ma)
 
@@ -48,14 +50,39 @@ const PostPage = (req) => {
 
     const HomeButton = (
         <Fragment>
-            <Link to="/">home</Link>
+            관리자 권한아님
         </Fragment>
     )
-    console.log(title)
+    
+
+
+    
 
     return (
         <Fragment>
-            ???? post page
+            
+            <div>
+                { isAuthenticated ? EditButton : HomeButton }
+                <br />
+                <br />
+                <br />
+                <br />
+                {postDetail && (
+                    <Fragment>
+                        <div className="aa"></div>
+                        title: {postDetail.title}  <br />
+                        contents: {postDetail.contents}  <br />
+                        views: {postDetail.views}  <br />
+                        date: {postDetail.date}  <br />
+                        comments: {postDetail.comments}  <br />
+                        name: {postDetail.creator.name}  <br />
+                        category: {postDetail.category.categoryName}  <br />
+                    </Fragment>
+                )}
+
+
+
+            </div>
         </Fragment>
     )
 }

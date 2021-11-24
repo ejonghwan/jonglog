@@ -68,12 +68,13 @@ router.get('/', async (req, res, next) => {
 }) 
 
 
+
 // @routes   POST api/post
 // @desc     Create a Post
 // @access   private
 router.post('/', auth, uploadS3.none(), async (req, res, next) => {
     try {
-        console.log(req, '이거 꼭 확인 아이디 req')
+        console.log(req.user, '이거 꼭 확인 아이디 req')
 
         const { title, contents, fileUrl, creator, category } = req.body; 
         const newPost = await Post.create({
@@ -81,7 +82,7 @@ router.post('/', auth, uploadS3.none(), async (req, res, next) => {
             contents,
             fileUrl,
             creator: req.user.id,
-            date: moment.format('YYYY-MM-DD hh:mm:ss')
+            // date: moment.format('YYYY-MM-DD hh:mm:ss')
         });
 
         const findCaterory = await Category.findOne({
@@ -119,8 +120,8 @@ router.post('/', auth, uploadS3.none(), async (req, res, next) => {
             })
         }
         
-        // return res.redirect(`/api/post/${newPost._id}`)
-        return res.json(newPost)
+        return res.redirect(`/api/post/${newPost._id}`)
+        // return res.json(newPost)
 
         // res.json(newPost)
 

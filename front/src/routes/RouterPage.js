@@ -12,6 +12,7 @@ import PostEdit from './normalRoute/PostEdit'
 import PostWrite from './normalRoute/PostWrite'
 import Profile from './normalRoute/Profile'
 import Search from './normalRoute/Search'
+import Guide from '../components/common/Guide.js';
 
 
 const RouterPage = () => {
@@ -30,6 +31,7 @@ const RouterPage = () => {
                 {/* <Route path="/" element={PostEdit}></Route> */}
                 <Route path="/search/:searchTerm" element={<Search />}></Route>
                 <Route path="*" element={<Navigate to="/" />}/>
+                <Route path="/guide" element={<Guide />} ></Route>
             </Routes>
 
             <Footer />

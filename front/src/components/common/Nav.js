@@ -45,7 +45,13 @@ const Nav = () => {
         <Fragment>
             {userRole === "MainJuin" ? (
                 <Fragment>
-                    <Link to="/post" onClick={addPostClick}>add post</Link>
+                    <span className="line_r_t1">
+                        {user ? `안녕~ ${user.name }` : ""}
+                    </span>
+                    <span className="line_r_t1"> 
+                        <Link to="/post" onClick={addPostClick}>글쓰기</Link>
+                    </span>
+                    
                     <Routes>
                         <Route path="/posts" component={SignupModal} />
                     </Routes>
@@ -54,7 +60,7 @@ const Nav = () => {
                 <Fragment>
                     {user && user.name ? (
                         <Fragment>
-                            {user ? `welcom ${user.name }` : ""}
+                            {user ? `안녕~ ${user.name }님` : ""}
                         </Fragment>
                     ) : (
                         <button>
@@ -64,7 +70,7 @@ const Nav = () => {
                 </Fragment>
                 
             )}
-            <button onClick={logout}>logout</button>
+            <button onClick={logout}>로그아웃</button>
         </Fragment>
     )
 
@@ -78,14 +84,35 @@ const Nav = () => {
     
     return (
         <Fragment>
+            
+            <div className="auth_box">
+                {user ? authLink : guestLink}
+            </div>
+           
             <nav>
-                <ul>
+                <ul className="nav_list">
                     <li>
-                        {/* <Link to="/">jonglog</Link> */}
-                        <a href="/">jonglog</a>
+                        <Link to="/">jonglog</Link>
                     </li>
-                     {user ? authLink : guestLink}
-                
+                    <li>
+                        <Link to="/">Profile</Link>
+                    </li>
+                    <li>
+                        <Link to="/">HTML</Link>
+                    </li>
+                    <li>
+                        <Link to="/">CSS</Link>
+                    </li>
+                    <li> 
+                        <Link to="/">Javascript</Link>
+                    </li>
+                    <li>
+                        <ul className="icon_box">
+                            <li>검색</li>
+                            <li>모모</li>
+                            <li>블랙앤화이트</li>
+                        </ul>
+                    </li>
                 </ul>
             </nav>
         </Fragment>

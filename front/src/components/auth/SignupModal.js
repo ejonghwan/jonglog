@@ -18,11 +18,16 @@ const SignupModal = () => {
 
     const dispatch = useDispatch()
 
-    const handleToggle = e => {
+    const handleToggle = () => {
         dispatch({
-            type: CLEAR_ERROR_REQUEST,
+            type: CLEAR_ERROR_REQUEST
         })
-        setModal(!modal)
+        if(!modal) {
+            document.body.classList.add('dimd')
+        } else {
+            document.body.classList.remove('dimd')
+        }
+        setModal(!modal);
     }
 
     useEffect(() => {
@@ -57,24 +62,37 @@ const SignupModal = () => {
 
     return (
         <Fragment>
-            <button onClick={handleToggle}>signup</button>
+            <button onClick={handleToggle}>회원가입</button>
             {modal && (
-                <form onSubmit={handleSubmit}>
-                    <div>
-                        <label htmlFor="email">email</label>
-                        <input id="email" name="email" type="text" onChange={handleChange}/>
+            <article className="pop_t1">
+                <div className="pop_head">
+                    <h2>회원가입</h2>
+                    <p>modal body</p>
+                </div>
+                <div className="pop_body">
+                        <div className="form_t1">
+                            <form onSubmit={handleSubmit}>
+                                <div className="item">
+                                    <label htmlFor="email">email</label><br />
+                                    <input id="email" name="email" type="text" onChange={handleChange}/>
+                                </div>
+                                <div className="item">
+                                    <label htmlFor="name">name</label><br />
+                                    <input id="name" name="name" type="text" onChange={handleChange}/>
+                                </div>
+                                <div className="item">
+                                    <label htmlFor="password">password</label><br />
+                                    <input id="password" name="password" type="text" onChange={handleChange}/>
+                                </div>
+                                <button type="submit">signup</button>
+                            </form>
+                        </div>
+                    
                     </div>
-                    <div>
-                        <label htmlFor="name">name</label>
-                        <input id="name" name="name" type="text" onChange={handleChange}/>
-                    </div>
-                    <div>
-                        <label htmlFor="password">password</label>
-                        <input id="password" name="password" type="text" onChange={handleChange}/>
-                    </div>
-                    <button type="submit">signup</button>
-                </form>
+                    <button onClick={handleToggle} className="pop_close">닫기</button>
+            </article>
             )}
+            
         </Fragment>
     )
 }

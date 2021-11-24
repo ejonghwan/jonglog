@@ -1,0 +1,25 @@
+.btn_line  {
+    display: inline-block;
+    border: 1px solid #ddd;
+    padding: 15px 20px;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.btn_point_t1 {
+    display: inline-block;
+    background: rgb(81, 90, 94);
+    padding: 15px 20px;
+    border-radius: 5px;
+    width: 100%;
+    color: #fff;
+}
+
+.btn_point_t2 {
+    display: inline-block;
+    background: #1f9deb;
+    padding: 15px 20px;
+    border-radius: 5px;
+    width: 100%;
+    color: #fff;
+}
