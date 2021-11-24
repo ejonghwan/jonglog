@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import {} from 'react-helmet'
 import { Link, useParams, useLocation } from 'react-router-dom'
 import { POST_DETAIL_LOADING_REQUEST, USER_LOAD_REQUEST, POST_DELETE_REQUEST } from '../../redux/types.js'
-// import { CKEditor } from '@ckeditor/ckeditor5-react'
-import CKEditor from '@ckeditor/ckeditor5-react'
+import { CKEditor } from '@ckeditor/ckeditor5-react'
+// import CKEditor from '@ckeditor/ckeditor5-react' 아씨 절대 이렇게 쓰면 안됨 --
+import BallonEditor from '@ckeditor/ckeditor5-editor-balloon/src/ballooneditor'
+import { editorConfiguration } from '../../components/editor/Edit.js';
 
 const PostPage = (req) => {
 
@@ -67,19 +69,34 @@ const PostPage = (req) => {
                 <br />
                 <br />
                 <br />
-                {postDetail && (
+                {postDetail && postDetail.comments ?  (
+                    
                     <Fragment>
-                        <div className="aa"></div>
-                        title: {postDetail.title}  <br />
-                        contents: {postDetail.contents}  <br />
-                        views: {postDetail.views}  <br />
-                        date: {postDetail.date}  <br />
-                        comments: {postDetail.comments}  <br />
-                        name: {postDetail.creator.name}  <br />
-                        category: {postDetail.category.categoryName}  <br />
+                        <span>date{postDetail.date}</span> &nbsp;
+                        <span>length{postDetail.comments.length}</span> &nbsp;
+                        <span>view{postDetail.views}</span> &nbsp;
+                        <CKEditor 
+                            editor={BallonEditor}
+                            data={postDetail.contents}
+                            config={editorConfiguration}
+                            disabled="true"
+                        />
+                    </Fragment>
+                ) : (
+                    <Fragment>
+                        asdasd
                     </Fragment>
                 )}
 
+
+
+                {/* title: {postDetail.title}  <br />
+                contents: {postDetail.contents}  <br />
+                views: {postDetail.views}  <br />
+                date: {postDetail.date}  <br />
+                comments: {postDetail.comments}  <br />
+                name: {postDetail.creator.name}  <br />
+                category: {postDetail.category.categoryName}  <br /> */}
 
 
             </div>

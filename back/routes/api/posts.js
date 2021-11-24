@@ -9,6 +9,7 @@ import dotenv from 'dotenv';
 import Post from '../../models/post.js';
 import Category from '../../models/category.js'
 import User from '../../models/user.js'
+import Comment from '../../models/comment.js'
 
 // middleware
 import auth from '../../middleware/auth.js'
@@ -144,6 +145,61 @@ router.get('/:id', async(req, res, next) => {
     } catch(err) {
         console.error(err);
         next(err)
+    }
+})
+
+
+
+// @routes   GET api/post/:id/comments
+// @desc     get all comments
+// @access   public
+router.get('/:id/comments', async(req, res) => {
+    try {
+        const comment = await Post.findById(req.params.id).populate({ // params에 해당 게시물 아이디
+            path: "comments", //path는 모델에 연결되어있는 이름들임. ref 아님. 여기서는 model post 에 있는 comments
+        })  
+        const result = comment.comment;
+        console.log(result, "comment log임")
+
+        res.status(200).json(result)
+
+    } catch(err) {
+        console.log(err)
+        // res.redirect('/')
+    }
+})
+
+
+// @routes   POST api/post/:id/comments
+// @desc     create comments
+// @access   private
+router.post(':/id/comments', async(req, res, next) => {
+    try {
+        const createComment = await Comment.create({
+            contents: req.body.contents,
+            creator: req.body.userId,
+            creatorName: req.body.userName,
+            post: req.body.id,
+            date: moment().format('YYYY-MM-DD hh:mm:ss'),
+        })
+        
+        await Post.findByIdAndUpdate(req.body.id, { // body로 넘어온 아이디로 포스트를 찾은 후 거기에 연결된 코멘트를 업데이트
+            $push: {
+                comments: createComment._id,
+            }
+        })
+        await User.findByIdAndUpdate(req.body.userId, { //마찬가지로 유저에 있는 코멘트에도 업데이트
+            $push: {
+                comments: { //글삭 했을 때 코멘트도 같이 지우기위해
+                    post_id: req.body.id,
+                    comment_id: createComment._id,
+                }
+            } 
+        })
+        res.status(200).json(createComment)
+        console.log(createComment, '코멘트 생성')
+    } catch (err) {
+        console.log(err)
     }
 })
 

@@ -27,7 +27,7 @@ const UserSchema = new Schema({
         default: moment().format("YYYY-MM-DD hh:mm:ss"),
     },
     comments: [
-        {
+        { // 글을 지웠을 때 해당 글과 코멘트를 한번에 지우기 위해
             post_id: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "post",

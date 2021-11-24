@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import moment from 'moment';
+import comment from './comment.js'; // --;; 참조하는 모델은 임폴트 해줘야함....안하면 에러.....에혀
 
 const { Schema } = mongoose
 
