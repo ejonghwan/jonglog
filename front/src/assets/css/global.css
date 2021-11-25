@@ -188,7 +188,9 @@ footer {background: rgb(159, 169, 182); color: #fff; font-size: 1.3rem; letter-s
     min-width: 100%;
 }
 
-
+.ck.ck-editor__editable_inline {
+    overflow: none;;
+}
 
 
 /* 980 이하 */

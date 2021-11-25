@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import {} from 'react-helmet'
-import { Link, useParams, useLocation } from 'react-router-dom'
+import { Link, useParams, useLocation, useNavigate } from 'react-router-dom'
 import { POST_DETAIL_LOADING_REQUEST, USER_LOAD_REQUEST, POST_DELETE_REQUEST, COMMENT_LOADING_REQUEST } from '../../redux/types.js'
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 // import CKEditor from '@ckeditor/ckeditor5-react' 아씨 절대 이렇게 쓰면 안됨 --
@@ -11,23 +11,25 @@ import Comments from '../../components/comments/Comments.js';
 
 const PostPage = (req) => {
 
-    const params = useParams();
+    // const params = useParams();
     // const ma = useLocation()
     const dispatch = useDispatch();
     const { postDetail, creatorId, title, loading } = useSelector(state => state.posts)
     const { userId, userName, isAuthenticated } = useSelector(state => state.user)
     const { comments } = useSelector(state => state.comment)
 
-
-    console.log(comments, '아니 왜 안돼 ')
+    
+    // console.log(comments, '아니 왜 안돼 ')
     // console.log(postDetail, creatorId, title, loading)
     // console.log(params.id)
     // console.log(ma)
 
     useEffect(() => {
+        console.log('asdasdasdasd', req)
         dispatch({
             type: POST_DETAIL_LOADING_REQUEST,
-            data: params.id,
+            // data: params.id,
+            data: req.match.params.id,
         })
         dispatch({
             type: USER_LOAD_REQUEST,
@@ -35,7 +37,8 @@ const PostPage = (req) => {
         })
         dispatch({
             type: COMMENT_LOADING_REQUEST,
-            data: params.id,
+            // data: params.id,
+            data: req.match.params.id,
         })
     }, [])
 
@@ -43,7 +46,8 @@ const PostPage = (req) => {
         dispatch({
             type: POST_DELETE_REQUEST,
             data: {
-                id: params.id,
+                // id: params.id,
+                id: req.match.params.id,
                 token: localStorage.getItem('token')
             }
         })
@@ -52,7 +56,7 @@ const PostPage = (req) => {
     const EditButton = (
         <Fragment>
             <Link to="/">home</Link>
-            <Link to={`/post/${params.id}/edit`}>edit post</Link>
+            <Link to={`/post/${req.match.params.id}/edit`}>edit post</Link>
             <button onClick={handleDelete}>delete</button>
         </Fragment>
     )
@@ -87,6 +91,7 @@ const PostPage = (req) => {
                             data={postDetail.contents}
                             config={editorConfiguration}
                             disabled="true"
+                            height="100%"
                         />
                         <hr />
                         <p>!!comment</p>
@@ -109,7 +114,7 @@ const PostPage = (req) => {
                         
                             
                             <Comments 
-                                postId={params.id}
+                                postId={req.match.params.id}
                                 userId={userId}
                                 userName={userName}
                             />

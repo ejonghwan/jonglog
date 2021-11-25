@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { all, call, fork, put, takeEvery, takeLatest } from 'redux-saga/effects'
+import { all, call, fork, put, takeEvery, takeLatest, getContext } from 'redux-saga/effects'
 import { push } from 'connected-react-router'
 import { 
     POSTS_LOADING_FAILURE, POSTS_LOADING_REQUEST, POSTS_LOADING_SUCCESS, 
@@ -51,8 +51,9 @@ function uploadPostApi(data) {
 }
 function* uploadPost(action) {
     try {
-        console.log('saga upload action', action)
+        // console.log('saga upload action', action)
         const result = yield call(uploadPostApi, action.data)
+        
         console.log('saga upload result', result)
         yield put({
             type: UPLOAD_POST_SUCCESS,

@@ -27,6 +27,7 @@ const LoginModal = () => {
         } catch(err) {
             console.log(err)
         }
+        
     }, [errorMsg])
 
 
@@ -34,12 +35,18 @@ const LoginModal = () => {
         dispatch({
             type: CLEAR_ERROR_REQUEST
         })
+        setModal(!modal);
         if(!modal) {
             document.body.classList.add('dimd')
         } else {
             document.body.classList.remove('dimd')
         }
-        setModal(!modal);
+    }
+
+    const completeLogin = e => {
+        console.log('??????이거 왜 실행안되냐 ? ')
+        document.body.classList.remove('dimd')
+        
     }
 
     const handleChange = (e) => {
@@ -82,7 +89,7 @@ const LoginModal = () => {
                                         <label htmlFor="password">비밀번호</label>
                                         <input id="password" type="password" name="password" onChange={handleChange} />
                                     </div>
-                                    <Button type="submit" onClick={handleToggle} value={"로그인"} classN={"btn_point_t2 gapt_20"}/> <br />
+                                    <Button type="submit" onClick={completeLogin} value={"로그인"} classN={"btn_point_t2 gapt_20"}/> <br />
                                 </form>
                             </div>
                         </div>

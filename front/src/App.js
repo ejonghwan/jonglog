@@ -11,6 +11,7 @@ import './assets/css/global.css'
 
 const App = () => {
   return (
+    
     <Provider store={store}>
       <ConnectedRouter history={history}>
        

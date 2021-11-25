@@ -121,8 +121,8 @@ router.post('/', auth, uploadS3.none(), async (req, res, next) => {
             })
         }
         
-        return res.redirect(`/api/post/${newPost._id}`)
-        // return res.json(newPost)
+        res.redirect(`/api/post/${newPost._id}`)
+        // return res.json('tlqkf')
 
         // res.json(newPost)
 

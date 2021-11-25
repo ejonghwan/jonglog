@@ -1,6 +1,6 @@
 import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import { LOGOUT_REQUEST } from '../../redux/types.js';
 
 import LoginModal from '../auth/LoginModal.js'
@@ -52,9 +52,9 @@ const Nav = () => {
                         <Link to="/post" onClick={addPostClick}>글쓰기</Link>
                     </span>
                     
-                    <Routes>
+                    {/* <Routes> */}
                         <Route path="/posts" component={SignupModal} />
-                    </Routes>
+                    {/* </Routes> */}
                 </Fragment>
             ) : (
                 <Fragment>

@@ -13,7 +13,7 @@ dotenv.config();
 
 const PostWrite = () => {
 
-    const { isAuthenticated } = useSelector(state => state.user)
+    const { isAuthhenticated } = useSelector(state => state.user)
     const [ form, setValues ] = useState({ title: "", contents: "", fileUrl: "", category: "", })
     const dispatch = useDispatch();
 
@@ -27,7 +27,7 @@ const PostWrite = () => {
     const handleSubmit = e => {
         e.preventDefault();
         const { title, contents, fileUrl, category } = form
-        dispatch({
+         dispatch({
             type: UPLOAD_POST_REQUEST,
             data: {title, contents, fileUrl, category}
         })
@@ -84,7 +84,7 @@ const PostWrite = () => {
     return (
         <Fragment>
             asdasdas
-            { isAuthenticated ? (
+            { isAuthhenticated ? (
                 <Fragment>
                     <form onSubmit={handleSubmit}>
                         <div>
@@ -100,7 +100,8 @@ const PostWrite = () => {
                            <CKEditor 
                                 editor={ClassicEditor}
                                 config={editorConfiguration}
-                                onInit={Myinit}
+                                onReady={Myinit}
+                                // onInit={Myinit}
                                 onBlur={getDataFromCKEditor}
                            />
                         </div>

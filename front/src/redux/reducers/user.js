@@ -18,6 +18,7 @@ const initialState = {
     userRole: '',
     errorMsg: '',
     successMsg: '',
+    dimd: null,
 
 }
 
@@ -43,6 +44,7 @@ const reducer = (state = initialState, action) => {
                 userId: action.payload.user.id,
                 userRole: action.payload.user.role,
                 errorMsg: '',
+                dimd: document.body.classList.remove('dimd'),
             }
         case LOGIN_FAILURE: 
         case LOGOUT_FAILURE:
