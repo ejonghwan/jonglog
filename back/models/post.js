@@ -16,7 +16,7 @@ const PostSchema = new Schema({
     },
     views: { 
         type: Number,
-        default: -2, //처음 작성한 사람의 조회가 집계돼서 -2로  
+        default: 0, //처음 작성한 사람의 조회가 집계돼서 -2로  
     },
     fileUrl: {
         type: String,

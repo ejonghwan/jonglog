@@ -19,12 +19,12 @@ function* loadComment(action) {
         const result = yield call(loadCommentApi, action.data);
         yield put({
             type: COMMENT_LOADING_SUCCESS,
-            payload: result.data
+            data: result.data
         })
     } catch(err) {
         yield put({
             type: COMMENT_LOADING_FAILURE,
-            payload: err.response,
+            data: err.response,
         })
     }
 }
@@ -38,7 +38,7 @@ function* watchLoadComment() {
 
 // upload commnet
 function uploadCommentApi(data) {
-    console.log('업로드 사가 데이터??', data)
+    // console.log('업로드 사가 데이터??', data)
     return axios.post(`/api/post/${data.postId}/comments`, data)
 }
 
@@ -46,14 +46,15 @@ function uploadCommentApi(data) {
 function* uploadComment(action) {
     try {
         const result = yield call(uploadCommentApi, action.data);
+        // console.log(result)
         yield put({
             type: COMMENT_UPLOADING_SUCCESS,
-            payload: result.data
+            data: result.data
         })
     } catch(err) {
         yield put({
             type: COMMENT_UPLOADING_FAILURE,
-            payload: err.response,
+            data: err.response,
         })
     }
 }

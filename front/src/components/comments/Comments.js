@@ -9,6 +9,7 @@ const Comments = ({ postId, userId, userName }) => {
 
     const handleChange = e => {
         e.preventDefault();
+        console.log(form)
         setValues({
             ...form,
             [e.target.name]: e.target.value,
@@ -40,7 +41,7 @@ const Comments = ({ postId, userId, userName }) => {
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>content</label>
-                    <textarea onChange={handleChange}>adasad</textarea>
+                    <input name="contents" onChange={handleChange}></input>
                     <button type="submit">comment</button>
                 </div>
             </form>

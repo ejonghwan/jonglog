@@ -6,6 +6,8 @@ import { CLEAR_ERROR_REQUEST, SIGNUP_REQUEST } from '../../redux/types';
 
 const SignupModal = () => {
 
+    
+
     const [modal, setModal] = useState(false)
     const [form, setValue] = useState({
         name: "",
@@ -28,6 +30,7 @@ const SignupModal = () => {
             document.body.classList.remove('dimd')
         }
         setModal(!modal);
+
     }
 
     useEffect(() => {

@@ -82,7 +82,7 @@ const reducer = (state = initialState, action) => {
                 isloading: false,
                 isAuthenticated: true,
                 user: action.payload,
-                userId: action.payload.id,
+                userId: action.payload._id,
                 userName: action.payload.name,
                 userRole: action.payload.role,
             }

@@ -43,7 +43,7 @@ const uploadS3 = multer({
 // @access   private
 router.post('/image', uploadS3.array("upload", 5), async (req, res, next) => {
     try {
-        console.log(req.files.map(v => v.location))
+        // console.log(req.files.map(v => v.location))
         res.json({ uploaded: true, url: req.files.map(v => v.location) })
     } catch(err) {
         console.error(err)
@@ -89,7 +89,7 @@ router.post('/', auth, uploadS3.none(), async (req, res, next) => {
         const findCaterory = await Category.findOne({
             categoryName: category, //모델에 설정한 객체값과: 넘어온 값 하나를 찾아줌
         })
-        console.log(findCaterory)
+        // console.log(findCaterory)
 
         if(isNullOrUndefined(findCaterory)) { //카테고리가 없는 경우
             const newCategory = await Category.create({
@@ -110,7 +110,7 @@ router.post('/', auth, uploadS3.none(), async (req, res, next) => {
 
         } else {
             //카테고리가 있는경우 
-            await Category.findByIdAndUpdate(findCategory._id, {
+            await Category.findByIdAndUpdate(findCaterory._id, {
                 $push: { posts: newPost._id }
             })
             await Post.findByIdAndUpdate(newPost._id, {
@@ -140,7 +140,7 @@ router.get('/:id', async(req, res, next) => {
         const post = await Post.findById(req.params.id).populate('creator', 'name').populate({ path: 'category', select: 'categoryName' }) //populate는 모델에 있는 object.id로 연결되어있는 것들을?  만들어달란 요청 ?
         post.views += 1
         post.save()
-        console.log(post);
+        // console.log(post);
         res.json(post)
     } catch(err) {
         console.error(err);
@@ -158,8 +158,8 @@ router.get('/:id/comments', async(req, res) => {
         const comment = await Post.findById(req.params.id).populate({ // params에 해당 게시물 아이디
             path: "comments", //path는 모델에 연결되어있는 이름들임. ref 아님. 여기서는 model post 에 있는 comments
         })  
-        const result = comment.comment;
-        console.log(result, "comment log임")
+        const result = comment.comments;
+        // console.log(comment, "comment log임")
 
         res.status(200).json(result)
 
@@ -173,9 +173,9 @@ router.get('/:id/comments', async(req, res) => {
 // @routes   POST api/post/:id/comments
 // @desc     create comments
 // @access   private
-router.post(':/id/comments', async(req, res, next) => {
+router.post('/:id/comments', async(req, res, next) => {
     try {
-        console.log(req.body)
+        console.log(req.body.userId, '레큐바디 아이디 !!!!!!!! 아오')
         const createComment = await Comment.create({
             contents: req.body.contents,
             creator: req.body.userId,
@@ -184,7 +184,7 @@ router.post(':/id/comments', async(req, res, next) => {
             date: moment().format('YYYY-MM-DD hh:mm:ss'),
         })
         
-        await Post.findByIdAndUpdate(req.body.id, { // body로 넘어온 아이디로 포스트를 찾은 후 거기에 연결된 코멘트를 업데이트
+        await Post.findByIdAndUpdate(req.params.id, { // body로 넘어온 아이디로 포스트를 찾은 후 거기에 연결된 코멘트를 업데이트
             $push: {
                 comments: createComment._id,
             }
@@ -198,7 +198,7 @@ router.post(':/id/comments', async(req, res, next) => {
             } 
         })
         res.status(200).json(createComment)
-        console.log(createComment, '코멘트 생성')
+        // console.log(createComment, '코멘트 생성')
     } catch (err) {
         console.log(err)
     }

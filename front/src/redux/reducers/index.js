@@ -14,4 +14,5 @@ const createRootReducers = history => combineReducers({
 
 
 
-export default createRootReducers
+export default createRootReducers;
+

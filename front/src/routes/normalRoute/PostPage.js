@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import {} from 'react-helmet'
 import { Link, useParams, useLocation } from 'react-router-dom'
-import { POST_DETAIL_LOADING_REQUEST, USER_LOAD_REQUEST, POST_DELETE_REQUEST } from '../../redux/types.js'
+import { POST_DETAIL_LOADING_REQUEST, USER_LOAD_REQUEST, POST_DELETE_REQUEST, COMMENT_LOADING_REQUEST } from '../../redux/types.js'
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 // import CKEditor from '@ckeditor/ckeditor5-react' 아씨 절대 이렇게 쓰면 안됨 --
 import BallonEditor from '@ckeditor/ckeditor5-editor-balloon/src/ballooneditor'
@@ -19,18 +19,23 @@ const PostPage = (req) => {
     const { comments } = useSelector(state => state.comment)
 
 
-    console.log(postDetail, creatorId, title, loading)
+    console.log(comments, '아니 왜 안돼 ')
+    // console.log(postDetail, creatorId, title, loading)
     // console.log(params.id)
     // console.log(ma)
 
     useEffect(() => {
         dispatch({
             type: POST_DETAIL_LOADING_REQUEST,
-            data: params.id
+            data: params.id,
         })
         dispatch({
             type: USER_LOAD_REQUEST,
             data: localStorage.getItem('token'),
+        })
+        dispatch({
+            type: COMMENT_LOADING_REQUEST,
+            data: params.id,
         })
     }, [])
 
@@ -86,18 +91,22 @@ const PostPage = (req) => {
                         <hr />
                         <p>!!comment</p>
                         <div>
-                            {Array.isArray(comments) ? comments.map(({ contents, creator, date, _id, creatorName }) => {
-                                <div key={_id}>
-                                    <div>작성자: {creatorName ? creatorName : creator}</div>
-                                    <div>시간: {date}</div>
-                                    <div>내용: {contents}</div>
-                                </div>
+                            {Array.isArray(comments) ? comments.map( ({ contents, creator, date, _id, creatorName }) => {
+                                return (
+                                        <div key={_id}>
+                                            <div>작성자: {creatorName ? creatorName : creator}</div>
+                                            <div>시간: {date}</div>
+                                            <div>내용: {contents}</div>
+                                        </div>
+                                )
                             }) : (
                                 <Fragment>
                                     creator
                                 </Fragment>
                             ) }
 
+                          
+                        
                             
                             <Comments 
                                 postId={params.id}
