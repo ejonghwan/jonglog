@@ -12,8 +12,8 @@ dotenv.config();
 
 
 const PostWrite = () => {
-
-    const { isAuthhenticated } = useSelector(state => state.user)
+    
+    const { isAuthenticated } = useSelector(state => state.user)
     const [ form, setValues ] = useState({ title: "", contents: "", fileUrl: "", category: "", })
     const dispatch = useDispatch();
 
@@ -55,8 +55,8 @@ const PostWrite = () => {
                 }
             }
 
-            console.log(ext_name_find)
-            console.log(whereImg_end)
+            // console.log(ext_name_find)
+            // console.log(whereImg_end)
 
             if(ext_name_find === "jpeg") {
                 result_img_url = data.substring(whereImg_start + 10, whereImg_end + 4)
@@ -84,7 +84,7 @@ const PostWrite = () => {
     return (
         <Fragment>
             asdasdas
-            { isAuthhenticated ? (
+            { isAuthenticated ? (
                 <Fragment>
                     <form onSubmit={handleSubmit}>
                         <div>

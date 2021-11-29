@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { COMMENT_UPLOADING_REQUEST } from '../../redux/types';
 
@@ -33,7 +33,15 @@ const Comments = ({ postId, userId, userName }) => {
             data: body,
         })
 
+        resetValue.current.value = ''
+        setValues({ contents: '' })
+
     }
+
+    const resetValue = useRef(null)
+    useEffect(() => {
+        console.log(resetValue)
+    }, [])
 
 
     return (
@@ -41,7 +49,7 @@ const Comments = ({ postId, userId, userName }) => {
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>content</label>
-                    <input name="contents" onChange={handleChange}></input>
+                    <textarea name="contents" resize="none" onChange={handleChange} ref={resetValue}></textarea>
                     <button type="submit">comment</button>
                 </div>
             </form>

@@ -134,7 +134,7 @@ input[type="password"] {background: #fff;border: 1px solid rgba(240, 240, 240);p
 
 #root {display: flex; flex-direction: column; width: 100%; height: 100%;}
 header, main, footer {flex: 0 1 auto;}
-main {border-top: 1px solid #ddd; width: 100%; height: 100%;;} 
+main {border-top: 1px solid #ddd; width: 100%;} 
 main .main_card_list {display: flex; flex-wrap: wrap; margin: -5px;;}
 main .main_card_list > li {flex: 1 1 auto; width: calc(25% - 10px);margin: 5px;}
 
@@ -188,8 +188,9 @@ footer {background: rgb(159, 169, 182); color: #fff; font-size: 1.3rem; letter-s
     min-width: 100%;
 }
 
+
 .ck.ck-editor__editable_inline {
-    overflow: none;;
+    overflow: none !important;
 }
 
 

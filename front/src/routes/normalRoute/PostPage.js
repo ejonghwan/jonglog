@@ -91,7 +91,7 @@ const PostPage = (req) => {
                             data={postDetail.contents}
                             config={editorConfiguration}
                             disabled="true"
-                            height="100%"
+                            
                         />
                         <hr />
                         <p>!!comment</p>
