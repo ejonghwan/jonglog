@@ -1,5 +1,5 @@
 import React, { Fragment,  } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 import Header from '../components/common/Header.js'
 import Footer from '../components/common/Footer.js'
@@ -13,6 +13,7 @@ import PostWrite from './normalRoute/PostWrite.js'
 import Profile from './normalRoute/Profile'
 import Search from './normalRoute/Search'
 import Guide from '../components/common/Guide.js';
+import { EditProtectedRoute } from './protectedRoute/index.js';
 
 
 const RouterPage = () => {
@@ -35,11 +36,18 @@ const RouterPage = () => {
                 <Route path="/" exact component={Main}></Route>
                 <Route path="/post/category/:categoryName" exact component={CategoryRoute}></Route>
                 <Route path="/post/:id" exact component={PostPage}></Route>
-                
                 <Route path="/post" exact component={PostWrite}></Route>
                 <Route path="/search/:searchTerm" exact component={Search}></Route>
-                {/* <Route path="*" component={ to="/" }/> */}
                 <Route path="/guide" exact component={Guide} ></Route>
+
+                
+                <EditProtectedRoute 
+                    path="/post/:id/edit" exact component={PostEdit}
+                />
+                
+                {/* <Route path="*" component={ to="/" }/> */}
+                <Redirect from="*" to='/' />
+
             </Switch>
 
             

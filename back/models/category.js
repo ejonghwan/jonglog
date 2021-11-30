@@ -13,7 +13,7 @@ const CategorySchema = new Schema({
     posts: [ //일대 다, 다대 다 관계 설정할 때 여러개일때 배열로 만들면 됨
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "posts",
+            ref: "post",
         },
     ],
 })

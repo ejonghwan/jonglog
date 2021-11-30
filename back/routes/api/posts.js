@@ -175,12 +175,12 @@ router.get('/:id/comments', async(req, res) => {
 // @access   private
 router.post('/:id/comments', async(req, res, next) => {
     try {
-        console.log(req.body.userId, '레큐바디 아이디 !!!!!!!! 아오')
+        console.log(req.body, '레큐바디 아이디 !!!!!!!! 아오')
         const createComment = await Comment.create({
             contents: req.body.contents,
             creator: req.body.userId,
             creatorName: req.body.userName,
-            post: req.body.id,
+            post: req.body.postId,
             date: moment().format('YYYY-MM-DD hh:mm:ss'),
         })
         
@@ -192,7 +192,7 @@ router.post('/:id/comments', async(req, res, next) => {
         await User.findByIdAndUpdate(req.body.userId, { //마찬가지로 유저에 있는 코멘트에도 업데이트
             $push: {
                 comments: { //글삭 했을 때 코멘트도 같이 지우기위해
-                    post_id: req.body.id,
+                    post_id: req.body.postId,
                     comment_id: createComment._id,
                 }
             } 
@@ -202,6 +202,73 @@ router.post('/:id/comments', async(req, res, next) => {
     } catch (err) {
         console.log(err)
     }
+})
+
+
+// @routes   Delete api/post/:id/
+// @desc     delete
+// @access   private
+router.delete('/:id', auth, async(req, res) => {
+    try {
+        console.log(req.user)
+        await Post.deleteMany({ _id: req.params.id }); //포스트에서 지워주고
+        await Comment.deleteMany({ post: req.params.id }) //코멘트에서 지워주고
+        await User.findByIdAndUpdate(req.user.id, { //유저에서 포스트와 코멘트 안에서의 포스트도 지워준다
+            $pull: { //pull은 배열에서 빼줄때. push는 넣을때
+                posts: req.params.id,
+                comments: { post_id: req.params.id }
+            }
+        })
+
+        const CategoryUpdate = await Category.findOneAndUpdate(
+            { posts: req.params.id }, 
+            { $pull: { posts: req.params.id } },
+            { new: true } //new 는 업데이트를 적용시켜줌 
+            )
+
+        if(CategoryUpdate.posts.length === 0) { //해당 카테고리가 없으면 카테고리목록에서 삭제
+            await Category.deleteMany({ _id: CategoryUpdate })
+        }
+
+        res.status(200).json({
+            msg: '성공스'
+        })
+
+    } catch(err) {
+        res.status(400).json({
+            msg: err
+        })
+    }
+})
+
+
+// @routes   Get api/post/:id/edit
+// @desc     edit post
+// @access   private
+router.get('/:id/edit', auth, async (req, res, next) => { // 수정전 해당 게시물 찾기
+    try {
+        const post = await Post.findById(req.params.id).papulate('creator', 'name')
+        res.json(post)
+    } catch(err) {
+        console.error(err)
+    }
+})
+
+router.post('/:id/edit', auth, async(req, res, next) => {
+    console.log(req, '에딧에 req는 무엇인고 -_-')
+    const { body: { title, contents, fileUrl, id } } = req;
+
+    try {
+        const modifiedPost = await Post.findByIdAndUpdate(
+            id, { title, contents, fileUrl, date:moment().format('YYYY-mm-dd hh:mm:ss') },
+            { new: true }
+        )
+        // console.log(modifiedPost)
+        res.redirect(`/api/post/${modifiedPost.id}`)
+    } catch(err) {
+        console.error(err)
+    }
+
 })
 
 

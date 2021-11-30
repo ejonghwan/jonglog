@@ -55,8 +55,8 @@ const PostPage = (req) => {
 
     const EditButton = (
         <Fragment>
-            <Link to="/">home</Link>
-            <Link to={`/post/${req.match.params.id}/edit`}>edit post</Link>
+            <Link to="/">home</Link><br />
+            <Link to={`/post/${req.match.params.id}/edit`}>edit post</Link><br />
             <button onClick={handleDelete}>delete</button>
         </Fragment>
     )
