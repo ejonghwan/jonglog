@@ -26,308 +26,174 @@ import IndentBlock from "@ckeditor/ckeditor5-indent/src/indentblock";
 /* import Base64UploadAdapter from "@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter"; */
 import SimpleUploadAdapter from "@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter";
 import "@ckeditor/ckeditor5-build-classic/build/translations/ko";
+
+import CodeBlock from '@ckeditor/ckeditor5-code-block/src/codeblock';
+
 import dotenv from "dotenv";
-
- 
-
 dotenv.config();
 
- 
 
 export const editorConfiguration = {
-
-plugins: [
-
-Essentials,
-
-Paragraph,
-
-Bold,
-
-Code,
-
-Italic,
-
-Heading,
-
-Indent,
-
-IndentBlock,
-
-Underline,
-
-Strikethrough,
-
-BlockQuote,
-
-Font,
-
-Alignment,
-
-List,
-
-Link,
-
-MediaEmbed,
-
-PasteFromOffice,
-
-Image,
-
-ImageStyle,
-
-ImageToolbar,
-
-ImageUpload,
-
-ImageResize,
-
-SimpleUploadAdapter,
-
-Table,
-
-TableToolbar,
-
-TextTransformation,
-
-],
-
-toolbar: [
-
-"heading",
-
-"|",
-
-"bold",
-
-"italic",
-
-"underline",
-
-"strikethrough",
-
-"code",
-
-"|",
-
-"fontSize",
-
-"fontColor",
-
-"fontBackgroundColor",
-
-"|",
-
-"alignment",
-
-"outdent",
-
-"indent",
-
-"bulletedList",
-
-"numberedList",
-
-"blockQuote",
-
-"|",
-
-"link",
-
-"insertTable",
-
-"imageUpload",
-
-"mediaEmbed",
-
-"|",
-
-"undo",
-
-"redo",
-
-],
-
-heading: {
-
-options: [
-
-{
-
-model: "paragraph",
-
-view: "p",
-
-title: "본문",
-
-class: "ck-heading_paragraph",
-
-},
-
-{
-
-model: "heading1",
-
-view: "h1",
-
-title: "헤더1",
-
-class: "ck-heading_heading1",
-
-},
-
-{
-
-model: "heading2",
-
-view: "h2",
-
-title: "헤더2",
-
-class: "ck-heading_heading2",
-
-},
-
-{
-
-model: "heading3",
-
-view: "h3",
-
-title: "헤더3",
-
-class: "ck-heading_heading3",
-
-},
-
-],
-
-},
-
-fontSize: {
-
-options: [
-
-9,
-
-10,
-
-11,
-
-12,
-
-13,
-
-14,
-
-15,
-
-16,
-
-17,
-
-18,
-
-19,
-
-20,
-
-21,
-
-23,
-
-25,
-
-27,
-
-29,
-
-31,
-
-33,
-
-35,
-
-],
-
-},
-
-alignment: {
-
-options: ["justify", "left", "center", "right"],
-
-},
-
-table: {
-
-contentToolbar: ["tableColumn", "tableRow", "mergeTableCells"],
-
-},
-
-image: {
-
-resizeUnit: "px",
-
-toolbar: [
-
-"imageStyle:alignLeft",
-
-"imageStyle:full",
-
-"imageStyle:alignRight",
-
-"|",
-
-"imageTextAlternative",
-
-],
-
-styles: ["full", "alignLeft", "alignRight"],
-
-},
-
-typing: {
-
-transformations: {
-
-remove: [
-
-"enDash",
-
-"emDash",
-
-"oneHalf",
-
-"oneThird",
-
-"twoThirds",
-
-"oneForth",
-
-"threeQuarters",
-
-],
-},
-},
-
-
-
-language: "ko",
-
-simpleUpload: { // !! 중요
-    uploadUrl: `${process.env.REACT_APP_BASIC_SERVER_URL}/api/post/image`,
-    // Headers sent along with the XMLHttpRequest to the upload server.
-    headers: { "X-CSRF-TOKEN": "CSFR-Token",},
+    plugins: [
+        Essentials,
+        Paragraph,
+        Bold,
+        Code,
+        Italic,
+        Heading,
+        Indent,
+        IndentBlock,
+        Underline,
+        Strikethrough,
+        BlockQuote,
+        Font,
+        Alignment,
+        List,
+        Link,
+        MediaEmbed,
+        PasteFromOffice,
+        Image,
+        ImageStyle,
+        ImageToolbar,
+        ImageUpload,
+        ImageResize,
+        SimpleUploadAdapter,
+        Table,
+        TableToolbar,
+        TextTransformation,
+        CodeBlock,
+    ],
+
+    toolbar: [
+        "heading",
+        "|",
+        "bold",
+        "italic",
+        "underline",
+        "strikethrough",
+        "code",
+        "codeBlock",
+        "|",
+        "fontSize",
+        "fontColor",
+        "fontBackgroundColor",
+        "|",
+        "alignment",
+        "outdent",
+        "indent",
+        "bulletedList",
+        "numberedList",
+        "blockQuote",
+        "|",
+        "link",
+        "insertTable",
+        "imageUpload",
+        "mediaEmbed",
+        "|",
+        "undo",
+        "redo",
+    ],
+    codeBlock: {
+        languages: [
+            // Do not render the CSS class for the plain text code blocks.
+            { language: 'plaintext', label: 'Plain text', class: '' },
+
+            // Use the "php-code" class for PHP code blocks.
+            { language: 'php', label: 'PHP', class: 'php-code' },
+
+            // Use the "js" class for JavaScript code blocks.
+            // Note that only the first ("js") class will determine the language of the block when loading data.
+            { language: 'javascript', label: 'JavaScript', class: 'js javascript js-code' },
+
+            // Python code blocks will have the default "language-python" CSS class.
+            { language: 'python', label: 'Python' }
+        ]
     },
 
+    heading: {
+        options: [
+            {
+                model: "paragraph",
+                view: "p",
+                title: "본문",
+                class: "ck-heading_paragraph",
+            },
+            {
+                model: "heading1",
+                view: "h1",
+                title: "헤더1",
+                class: "ck-heading_heading1",
+            },
+            {
+
+                model: "heading2",
+                view: "h2",
+                title: "헤더2",
+                class: "ck-heading_heading2",
+            },
+            {
+                model: "heading3",
+                view: "h3",
+                title: "헤더3",
+                class: "ck-heading_heading3",
+            },
+        ],
+    },
+
+    fontSize: {
+        options: [9,10,11,12,13,14,15,16,17,18,19,20,21,23,25,27,29,31,33,35,],
+    },
+
+    alignment: {
+        options: ["justify", "left", "center", "right"],
+    },
+
+    table: {
+        contentToolbar: ["tableColumn", "tableRow", "mergeTableCells"],
+    },
+
+    image: {
+        resizeUnit: "px",
+        toolbar: [
+            "imageStyle:alignLeft",
+            "imageStyle:full",
+            "imageStyle:alignRight",
+            "|",
+            "imageTextAlternative",
+        ],
+        styles: ["full", "alignLeft", "alignRight"],
+
+    },
+
+    typing: {
+        transformations: {
+            remove: [
+                "enDash",
+                "emDash",
+                "oneHalf",
+                "oneThird",
+                "twoThirds",
+                "oneForth",
+                "threeQuarters",
+            ],
+        },
+    },
+    language: "ko",
+
+    simpleUpload: { // !! 중요
+        uploadUrl: `${process.env.REACT_APP_BASIC_SERVER_URL}/api/post/image`,
+        // Headers sent along with the XMLHttpRequest to the upload server.
+        headers: { "X-CSRF-TOKEN": "CSFR-Token", },
+    },
+
+    
 };
 
- 
+// editorConfiguration.execute( 'codeBlock', { language: 'javascript' } );
+
+
 
 export const ReadOnly_Configuration = {
-
-toolbar: ["heading"],
-
-heading: {},
-
+    toolbar: ["heading"],
+    heading: {},
 };

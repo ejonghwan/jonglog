@@ -1,9 +1,11 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor'
 import { editorConfiguration } from '../../components/editor/Edit.js'
 import Myinit from '../../components/editor/UploadAdapter.js';
+
+
 
 
 import dotenv from 'dotenv';
@@ -81,44 +83,45 @@ const PostWrite = () => {
         }
     }
 
+
+
+
     return (
         <Fragment>
-            asdasdas
-            { isAuthenticated ? (
-                <Fragment>
-                    <form onSubmit={handleSubmit}>
-                        <div>
-                            <label htmlFor="title">title</label>
-                            <input type="text" name="title" id="title" onChange={handleChange} />
-                        </div>
-                        <div>
-                            <label htmlFor="category">category</label>
-                            <input type="text" name="category" id="category" onChange={handleChange} />
-                        </div>
-                        <div>
-                            <label htmlFor="contents">contents</label>
-                           <CKEditor 
-                                editor={ClassicEditor}
-                                config={editorConfiguration}
-                                onReady={Myinit}
-                                // onInit={Myinit}
-                                onBlur={getDataFromCKEditor}
-                           />
-                        </div>
-                        {/* <div>
-                            <label htmlFor="fileUrl">fileUrl</label>
-                            <input type="text" name="fileUrl" id="fileUrl" onChange={handleChange} />
-                        </div> */}
-                       
-                        <button type="submit">제출!!</button>
-                    </form>
-                </Fragment>
-                ) : (
-                <Fragment>
-                    loading bar
-                </Fragment>
-                ) }
-            {/* <Edit /> */}
+                { isAuthenticated ? (
+                    <Fragment>
+                        <form onSubmit={handleSubmit}>
+                            <div>
+                                <label htmlFor="title">title</label>
+                                <input type="text" name="title" id="title" onChange={handleChange} />
+                            </div>
+                            <div>
+                                <label htmlFor="category">category</label>
+                                <input type="text" name="category" id="category" onChange={handleChange} />
+                            </div>
+                            <div>
+                                <label htmlFor="contents">contents</label>
+                            <CKEditor 
+                                    editor={ClassicEditor}
+                                    config={editorConfiguration}
+                                    onReady={Myinit}
+                                    // onInit={Myinit}
+                                    onBlur={getDataFromCKEditor}
+                            />
+                            </div>
+                            {/* <div>
+                                <label htmlFor="fileUrl">fileUrl</label>
+                                <input type="text" name="fileUrl" id="fileUrl" onChange={handleChange} />
+                            </div> */}
+                        
+                            <button type="submit">제출!!</button>
+                        </form>
+                    </Fragment>
+                    ) : (
+                    <Fragment>
+                        loading bar
+                    </Fragment>
+                    ) }
         </Fragment>
     )
 }

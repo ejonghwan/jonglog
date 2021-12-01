@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { 
     POSTS_LOADING_FAILURE, POSTS_LOADING_REQUEST, POSTS_LOADING_SUCCESS,
     POST_DETAIL_LOADING_SUCCESS, POST_DETAIL_LOADING_FAILURE, POST_DETAIL_LOADING_REQUEST,
@@ -5,6 +6,8 @@ import {
     UPLOAD_POST_REQUEST, UPLOAD_POST_SUCCESS, UPLOAD_POST_FAILURE, POST_EDIT_LOADING_REQUEST, POST_EDIT_LOADING_SUCCESS, POST_EDIT_LOADING_FAILURE, POST_EDIT_UPLOADING_REQUEST, POST_EDIT_UPLOADING_FAILURE, POST_EDIT_UPLOADING_SUCCESS,
 
 } from "../types";
+
+// const { user } = useSelector(state => state.user)
 
 const initialState = {
     posts: [],
@@ -88,7 +91,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 postDetail: action.data,
-                creatorId: action.data.creator.id,
+                creatorId: action.data.creator._id,
                 title: action.data.title,
                 loading: false,
             }

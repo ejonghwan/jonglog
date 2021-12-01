@@ -89,7 +89,7 @@ const LoginModal = () => {
                                         <label htmlFor="password">비밀번호</label>
                                         <input id="password" type="password" name="password" onChange={handleChange} />
                                     </div>
-                                    <Button type="submit" onClick={completeLogin} value={"로그인"} classN={"btn_point_t2 gapt_20"}/> <br />
+                                    <Button onClick={completeLogin} value={"로그인"} classN={"btn_point_t2 gapt_20"}/> <br />
                                 </form>
                             </div>
                         </div>

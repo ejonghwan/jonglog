@@ -1250,6 +1250,13 @@
   dependencies:
     "ckeditor5" "^31.0.0"
 
+"@ckeditor/ckeditor5-code-block@^31.0.0":
+  "integrity" "sha512-UCmY6BFB16POqCOjGyd+TA/dtOhDJ7I56KFxa8iC+sL2B8NkDVVx0Ll+z1PKp4j0FuZ/0YEW4ffGI8dN2ZU1jQ=="
+  "resolved" "https://registry.npmjs.org/@ckeditor/ckeditor5-code-block/-/ckeditor5-code-block-31.0.0.tgz"
+  "version" "31.0.0"
+  dependencies:
+    "ckeditor5" "^31.0.0"
+
 "@ckeditor/ckeditor5-core@^31.0.0":
   "integrity" "sha512-8AvolCaFC/iTDJViNAQk2uJr2LLRieCEc0Kda5OUT0xgeoUF+/B5DYSU3ie8cJOghBSjZmEoZFUApqGaDm0QIA=="
   "resolved" "https://registry.npmjs.org/@ckeditor/ckeditor5-core/-/ckeditor5-core-31.0.0.tgz"

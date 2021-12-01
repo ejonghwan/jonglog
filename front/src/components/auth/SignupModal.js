@@ -4,6 +4,10 @@ import { useSearchParams } from 'react-router-dom';
 import { CLEAR_ERROR_REQUEST, SIGNUP_REQUEST } from '../../redux/types';
 
 
+//component
+import Button from '../../components/common/button/Button.js'
+
+
 const SignupModal = () => {
 
     
@@ -70,24 +74,24 @@ const SignupModal = () => {
             <article className="pop_t1">
                 <div className="pop_head">
                     <h2>회원가입</h2>
-                    <p>modal body</p>
+                    <p className="line_l_t1">간단하게 회원가입 하세요~</p>
                 </div>
                 <div className="pop_body">
                         <div className="form_t1">
                             <form onSubmit={handleSubmit}>
                                 <div className="item">
-                                    <label htmlFor="email">email</label><br />
+                                    <label htmlFor="email">이메일</label><br />
                                     <input id="email" name="email" type="text" onChange={handleChange}/>
                                 </div>
                                 <div className="item">
-                                    <label htmlFor="name">name</label><br />
+                                    <label htmlFor="name">닉네임</label><br />
                                     <input id="name" name="name" type="text" onChange={handleChange}/>
                                 </div>
                                 <div className="item">
-                                    <label htmlFor="password">password</label><br />
+                                    <label htmlFor="password">비밀번호</label><br />
                                     <input id="password" name="password" type="text" onChange={handleChange}/>
                                 </div>
-                                <button type="submit">signup</button>
+                                <Button value={"회원가입"} classN={"btn_point_t2 gapt_20"}/>
                             </form>
                         </div>
                     

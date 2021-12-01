@@ -21,7 +21,30 @@ const RouterPage = () => {
         <Fragment>
             <Header />
             
-            {/* <Routes>
+            
+            <Main>
+                <Switch>
+                    
+                    <Route path="/" exact component={PostCardList}></Route>
+                    <Route path="/post/category/:categoryName" exact component={CategoryRoute}></Route>
+                    <Route path="/post/:id" exact component={PostPage}></Route>
+                    <Route path="/post" exact component={PostWrite}></Route>
+                    <Route path="/search/:searchTerm" exact component={Search}></Route>
+                    <Route path="/guide" exact component={Guide} ></Route>
+
+
+                    {/* <Route path="/post/:id/edit" exact component={PostEdit} /> */}
+                    <EditProtectedRoute 
+                        path="/post/:id/edit" exact component={PostEdit}
+                    />
+                    
+                    {/* <Route path="*" component={ to="/" }/> */}
+                    <Redirect from="*" to='/' />
+
+                </Switch>
+
+
+                {/* <Routes>
                 <Route path="/" element={<Main />}></Route>
                 <Route path="/post/category/:categoryName" element={<CategoryRoute />}></Route>
                 <Route path="/post/:id" element={<PostPage />}></Route>
@@ -29,28 +52,8 @@ const RouterPage = () => {
                 <Route path="/search/:searchTerm" element={<Search />}></Route>
                 <Route path="*" element={<Navigate to="/" />}/>
                 <Route path="/guide" element={<Guide />} ></Route>
-            </Routes> */}
-
-             <Switch>
-                
-                <Route path="/" exact component={Main}></Route>
-                <Route path="/post/category/:categoryName" exact component={CategoryRoute}></Route>
-                <Route path="/post/:id" exact component={PostPage}></Route>
-                <Route path="/post" exact component={PostWrite}></Route>
-                <Route path="/search/:searchTerm" exact component={Search}></Route>
-                <Route path="/guide" exact component={Guide} ></Route>
-
-                
-                <EditProtectedRoute 
-                    path="/post/:id/edit" exact component={PostEdit}
-                />
-                
-                {/* <Route path="*" component={ to="/" }/> */}
-                <Redirect from="*" to='/' />
-
-            </Switch>
-
-            
+                </Routes> */}
+            </Main>
 
             <Footer />
         </Fragment>

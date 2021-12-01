@@ -94,7 +94,7 @@ html {font-size: 10px;}
 body {font-size: 1.4rem;}
 html, body {width: 100%; height: 100%; font-family: "ari-Light"; color: #444; line-height: 2.3rem; white-space: nowrap;}
 img {width: 100%;;}
-.section_wrap {width: 980px; margin: 0 auto; padding: 40px 0; }
+.section_wrap {width: 1100px; margin: 0 auto; padding: 40px 0; }
 a {text-decoration: none; color: #444;}
 .line_r_t1 {position: relative; padding-right: 20px;;}
 .line_r_t1::after {content: ''; display: inline-block; position: absolute; right: 10px; bottom: 2px; top:0; margin: auto; width: 1px; height: 10px; background: rgb(211, 211, 211);}
@@ -133,8 +133,8 @@ input[type="password"] {background: #fff;border: 1px solid rgba(240, 240, 240);p
 
 
 #root {display: flex; flex-direction: column; width: 100%; height: 100%;}
-header, main, footer {flex: 0 1 auto;}
-main {border-top: 1px solid #ddd; width: 100%;} 
+header, footer {flex: 0 0 auto;}
+main {border-top: 1px solid #ddd; width: 100%; flex: 1 1 auto;} 
 main .main_card_list {display: flex; flex-wrap: wrap; margin: -5px;;}
 main .main_card_list > li {flex: 1 1 auto; width: calc(25% - 10px);margin: 5px;}
 
@@ -166,7 +166,7 @@ header .pop_close {position: absolute; top: -20px; right: 0;;}
 
 
 /* footer */
-footer {background: rgb(159, 169, 182); color: #fff; font-size: 1.3rem; letter-spacing: 0.01rem; position: relative; bottom: 0; width: 100%;;}
+footer {background: rgb(14, 17 ,22); color: #c3c3c3; font-size: 1.3rem; letter-spacing: 0.01rem; position: relative; bottom: 0; width: 100%;;}
 
 
 

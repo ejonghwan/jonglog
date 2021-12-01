@@ -12,6 +12,7 @@ import {
 
 
 
+
 function loadPostsApi() {
     return axios.get('/api/post')
 }

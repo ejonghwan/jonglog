@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor'
@@ -17,14 +17,14 @@ const PostEdit = () => {
     const { postDetail } = useSelector(state => state.posts) 
     const dispatch = useDispatch();
 
-    const handleChange = e => {
+    const handleChange = useCallback(e => {
         setValues({
             ...form,
             [e.target.name]: e.target.value,
         })
-    }
+    }, [form])
 
-    const handleSubmit = e => {
+    const handleSubmit = useCallback(e => {
         e.preventDefault();
         const { title, contents, fileUrl } = form // category 수정 나중에 추가
         const token = localStorage.getItem('token');
@@ -34,7 +34,7 @@ const PostEdit = () => {
             type: POST_EDIT_UPLOADING_REQUEST,
             data: {title, contents, fileUrl, token, id}
         })
-    }
+    }, [form])
 
     const getDataFromCKEditor = (event, editor) => {
         // console.log('editor')
@@ -93,6 +93,8 @@ const PostEdit = () => {
         })
     }, [postDetail.title, postDetail.contents, postDetail.fileUrl,])
 
+ 
+
     return (
         <Fragment>
             asdasdas
@@ -100,8 +102,8 @@ const PostEdit = () => {
                 <Fragment>
                     <form onSubmit={handleSubmit}>
                         <div>
-                            <label htmlFor="title" value={postDetail.title}>title</label>
-                            <input type="text" name="title" id="title" onChange={handleChange} />
+                            <label htmlFor="title" >title</label>
+                            <input type="text" name="title" id="title" value={form.title} onChange={handleChange} />
                         </div>
                         {/* <div>
                             <label htmlFor="category">category</label>

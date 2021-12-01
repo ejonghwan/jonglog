@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef } from 'react';
+import React, { Fragment, useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import {} from 'react-helmet'
 import { Link, useParams, useLocation, useNavigate } from 'react-router-dom'
@@ -42,7 +42,7 @@ const PostPage = (req) => {
         })
     }, [])
 
-    const handleDelete = e => {
+    const handleDelete = useCallback(e => {
         dispatch({
             type: POST_DELETE_REQUEST,
             data: {
@@ -51,7 +51,7 @@ const PostPage = (req) => {
                 token: localStorage.getItem('token')
             }
         })
-    }
+    }, [])
 
     const EditButton = (
         <Fragment>
@@ -86,6 +86,7 @@ const PostPage = (req) => {
                         <span>date{postDetail.date}</span> &nbsp;
                         <span>length{postDetail.comments.length}</span> &nbsp;
                         <span>view{postDetail.views}</span> &nbsp;
+                        <h3>{postDetail.title}</h3>
                         <CKEditor 
                             editor={BallonEditor}
                             data={postDetail.contents}
