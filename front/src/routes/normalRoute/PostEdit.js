@@ -59,7 +59,7 @@ const PostEdit = () => {
             }
 
             // console.log(ext_name_find)
-            // console.log(whereImg_end)
+            console.log(whereImg_end)
 
             if(ext_name_find === "jpeg") {
                 result_img_url = data.substring(whereImg_start + 10, whereImg_end + 4)
