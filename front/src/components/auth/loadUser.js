@@ -8,6 +8,7 @@ const loadUser = () => {
             type: USER_LOAD_REQUEST,
             data: localStorage.getItem("token"),
         })
+        
     } catch(err) {
         console.log(err)
     }

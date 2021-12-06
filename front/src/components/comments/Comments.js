@@ -7,6 +7,9 @@ const Comments = ({ postId, userId, userName }) => {
     const dispatch = useDispatch()
     const [form, setValues] = useState({ contents: '' })
 
+
+    console.log(form)
+
     const handleChange = e => {
         e.preventDefault();
         console.log(form)
