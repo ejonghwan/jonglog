@@ -28,9 +28,9 @@ const RouterPage = () => {
 
 
     useEffect(() => {
-        if(categoryFindResult) {
-            console.log('123123123123123', categoryFindResult)
-        }
+        // if(categoryFindResult) {
+        //     console.log('123123123123123', categoryFindResult)
+        // }
        
     }, [categoryFindResult])
     

@@ -3,7 +3,7 @@ import {
     POSTS_LOADING_FAILURE, POSTS_LOADING_REQUEST, POSTS_LOADING_SUCCESS,
     POST_DETAIL_LOADING_SUCCESS, POST_DETAIL_LOADING_FAILURE, POST_DETAIL_LOADING_REQUEST,
     POST_WRITE_FAILURE, POST_WRITE_REQUEST, POST_WRITE_SUCCESS, 
-    UPLOAD_POST_REQUEST, UPLOAD_POST_SUCCESS, UPLOAD_POST_FAILURE, POST_EDIT_LOADING_REQUEST, POST_EDIT_LOADING_SUCCESS, POST_EDIT_LOADING_FAILURE, POST_EDIT_UPLOADING_REQUEST, POST_EDIT_UPLOADING_FAILURE, POST_EDIT_UPLOADING_SUCCESS,
+    UPLOAD_POST_REQUEST, UPLOAD_POST_SUCCESS, UPLOAD_POST_FAILURE, POST_EDIT_LOADING_REQUEST, POST_EDIT_LOADING_SUCCESS, POST_EDIT_LOADING_FAILURE, POST_EDIT_UPLOADING_REQUEST, POST_EDIT_UPLOADING_FAILURE, POST_EDIT_UPLOADING_SUCCESS, CATEGORY_FIND_REQUEST, CATEGORY_FIND_SUCCESS, CATEGORY_FIND_FAILURE,
 
 } from "../types";
 
@@ -140,7 +140,27 @@ const reducer = (state = initialState, action) => {
                 loading: false,
                 error: action.data,
             }
-            
+        
+        case CATEGORY_FIND_REQUEST:
+            return {
+                ...state,
+                posts: [], // 빈배열로 만드는게 최선? 기존에 찾은것과 중복돼서..
+                loading: true,
+            }
+        case CATEGORY_FIND_SUCCESS: 
+            return {
+                ...state,
+                categoryFindResult: action.data,
+                loading: false,
+            }
+        case CATEGORY_FIND_FAILURE: 
+            return {
+                ...state,
+                loading: false,
+                categoryFindResult: action.data,
+                error: action.data,
+            }
+                
     
         default: return state;
     }

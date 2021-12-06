@@ -259,6 +259,9 @@ router.get('/:id/edit', auth, async (req, res, next) => { // 수정전 해당 �
     }
 })
 
+// @routes   Post api/post/:id/edit
+// @desc     edit post
+// @access   private
 router.post('/:id/edit', auth, async(req, res, next) => {
     console.log(req, '에딧에 req는 무엇인고 -_-')
     const { body: { title, contents, fileUrl, id } } = req;
@@ -274,6 +277,30 @@ router.post('/:id/edit', auth, async(req, res, next) => {
         console.error(err)
     }
 
+})
+
+
+// @routes   Get api/post/category/:categoryName
+// @desc     edit post
+// @access   private
+router.get('/category/:categoryName', async (req, res) => {
+    try {
+
+        const categoryFindResult = await Category.findOne({
+            categoryName: {
+                //$regex 이런 $ 들은 mongoDB에서 쓰는 정규표현식 orm. 주의점은 몽고디비+몽구스 메서드 섞어쓰면 작동안될수도 있음
+                $regex: req.params.categoryName, 
+                $options: "i"
+            }
+        }, "posts").populate({ path: "posts" })
+        // categoryName에서 아래 두 옵션을 준 설정 후 Category Model > posts객체에서 찾으라는 말. 그래서 posts 경로 만들어 populate 채워라.
+
+        console.log(categoryFindResult)
+
+        res.status(200).send(categoryFindResult)
+    } catch(err) {
+        console.log(err)
+    }
 })
 
 
