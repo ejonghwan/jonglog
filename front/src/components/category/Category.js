@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { CATEGORY_FIND_REQUEST } from '../../redux/types.js';
 import Button from '../common/button/Button.js'
 
 
@@ -9,7 +10,7 @@ const Category = ({ categoryFindResult }) => {
 
 
     // console.log(categoryFindResult)
-    
+  
 
     return (
         <Fragment>

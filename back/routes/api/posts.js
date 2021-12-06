@@ -297,7 +297,7 @@ router.get('/category/:categoryName', async (req, res) => {
 
         console.log(categoryFindResult)
 
-        res.status(200).send(categoryFindResult)
+        res.status(200).json(categoryFindResult)
     } catch(err) {
         console.log(err)
     }

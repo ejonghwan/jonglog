@@ -212,12 +212,13 @@ function* watchPostEditUpload() {
 
 // category find one
 function categoryFindApi(data) {
-    return axios.get(`/api/post/category/${data}`)
+    return axios.get(`/api/post/category/${encodeURIComponent(data)}`)
 }
 function* categoryFind(action) {
-    // saga action은 컴포넌트의 dispatch data 넘겨준 값인데 ... 왜 안되지 ?
+    // saga action은 컴포넌트의 dispatch data 넘겨준 값인데 ... 왜 안되지 ? 된다 돼 해결됨
     try {
         const result = yield call(categoryFindApi, action.data)
+        console.log('카테고리 파인드 사가', result)
         yield put({
             type: CATEGORY_FIND_SUCCESS,
             data: result.data
