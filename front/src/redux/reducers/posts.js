@@ -16,7 +16,7 @@ const initialState = {
     loading: false,
     error: '',
     creatorId: '',
-    categoryFindResult: '',
+    categoryFindResult: [],
     title: '',
     searchBy: '',
     searchResult: '',
@@ -36,7 +36,8 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                posts:[...state.posts, ...action.data]
+                posts:[...state.posts, ...action.data.postFindResult],
+                categoryFindResult: action.data.categoryFindResult
             }
         case POSTS_LOADING_FAILURE: 
             return {

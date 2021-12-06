@@ -59,9 +59,11 @@ router.get('/', async (req, res, next) => {
 
     try {
         const postFindResult = await Post.find();
-        console.log(postFindResult, "All post")
+        const categoryFindResult = await Category.find()
+        const result = { postFindResult, categoryFindResult }
+        // console.log(postFindResult, "All post")
 
-        res.json(postFindResult)
+        res.json(result)
     } catch(err) {
         console.log(err)
     }
@@ -138,8 +140,11 @@ router.post('/', auth, uploadS3.none(), async (req, res, next) => {
 router.get('/:id', async(req, res, next) => {
     try {
         const post = await Post.findById(req.params.id).populate('creator', 'name').populate({ path: 'category', select: 'categoryName' }) //populate는 모델에 있는 object.id로 연결되어있는 것들을?  만들어달란 요청 ?
+        const categoryFindResult = await Category.find()
+        const result = {post, categoryFindResult}
         post.views += 1
         post.save()
+        
         // console.log(post);
         res.json(post)
     } catch(err) {

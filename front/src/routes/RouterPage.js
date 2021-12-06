@@ -1,5 +1,7 @@
-import React, { Fragment,  } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
+import { useSelector } from 'react-redux'
+
 
 import Header from '../components/common/Header.js'
 import Footer from '../components/common/Footer.js'
@@ -14,15 +16,30 @@ import Profile from './normalRoute/Profile'
 import Search from './normalRoute/Search'
 import Guide from '../components/common/Guide.js';
 import { EditProtectedRoute } from './protectedRoute/index.js';
+import Category from '../components/category/Category.js'
+
+// import loadUser from '../components/auth/loadUser.js';
 
 
 const RouterPage = () => {
+
+    const { posts, categoryFindResult, postDetail } = useSelector(state => state.posts);
+    // const { user } = useSelector(state => state.user)
+
+
+    useEffect(() => {
+        if(categoryFindResult) {
+            console.log('123123123123123', categoryFindResult)
+        }
+       
+    }, [categoryFindResult])
+    
+
     return(
         <Fragment>
             <Header />
-            
-            
             <Main>
+                <Category categoryFindResult={categoryFindResult}/>
                 <Switch>
                     
                     <Route path="/" exact component={PostCardList}></Route>

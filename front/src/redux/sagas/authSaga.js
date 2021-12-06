@@ -78,7 +78,7 @@ function userLoadApi(tokenData) {
 function* userLoad(action) {
     try {
         const result = yield call(userLoadApi, action.data);
-        console.log('saga userloading', result)
+        // console.log('saga userloading', result)
         yield put({
             type: USER_LOAD_SUCCESS,
             payload: result.data

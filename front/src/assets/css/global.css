@@ -162,7 +162,9 @@ header .pop_close {position: absolute; top: -20px; right: 0;;}
 .form_t1 .item > label { flex: 0 1 auto; text-align: left; width: 30%; padding: 10px; display: inline-block; font-weight: bold;}
 
 
-
+/* category */
+.caterogy_wrap {display: flex; margin: -5px; flex-wrap: wrap;}
+.caterogy_wrap > li {margin: 2px;}
 
 
 /* footer */
