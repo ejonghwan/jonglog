@@ -90,4 +90,39 @@ router.post('/', async(req, res) => {
 
 
 
+// @routes   POST api/user/:username/profile
+// @desc     Edit password
+// @access   Private
+router.post('/:username/profile', async(req, res) => {
+    try{
+        const { prevPassword, password, checkPassword, userId } = req.body;
+        console.log('유저 프로필 레큐바디', req.body);
+
+        const result = await User.findById(userId, 'password');
+        bcrypt.compare(prevPassword, result.password).then(isMatch => { //bcrypt 에서 compare..이전비번과 db안에서 찾은 비번 비교해서
+            if(!isMatch) {
+                return res.status(400).json({match_error: '기존 비밀번호가 다릅니다'})
+            } else {
+                if(password === checkPassword) { // 만약 넘어온 비번과 디비저장된 비번이 같다면
+                    bcrypt.genSalt(10, (err, salt) => { //salt 로 만들어줌 2의 10승으로 ..그 다음 반환된 salt를 해시로 만들어줌
+                        bcrypt.hash(password, salt, (err, hash) => { //만들어진 해시를 result.password에 넣고 저장
+                            if(err) throw err;
+                            result.password = hash;
+                            result.save();
+                        })
+                    })
+
+                    res.status(200).json({ success: "비밀번호 변경 완료" })
+                } else {
+                    res.status(400).json({ error: "새로운 비밀번호가 다릅니다" })
+                }
+            }
+        }) 
+
+    } catch(err) {
+        console.log(err)
+    }
+})
+
+
 export default router;

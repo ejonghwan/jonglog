@@ -3,7 +3,7 @@ import {
     POSTS_LOADING_FAILURE, POSTS_LOADING_REQUEST, POSTS_LOADING_SUCCESS,
     POST_DETAIL_LOADING_SUCCESS, POST_DETAIL_LOADING_FAILURE, POST_DETAIL_LOADING_REQUEST,
     POST_WRITE_FAILURE, POST_WRITE_REQUEST, POST_WRITE_SUCCESS, 
-    UPLOAD_POST_REQUEST, UPLOAD_POST_SUCCESS, UPLOAD_POST_FAILURE, POST_EDIT_LOADING_REQUEST, POST_EDIT_LOADING_SUCCESS, POST_EDIT_LOADING_FAILURE, POST_EDIT_UPLOADING_REQUEST, POST_EDIT_UPLOADING_FAILURE, POST_EDIT_UPLOADING_SUCCESS, CATEGORY_FIND_REQUEST, CATEGORY_FIND_SUCCESS, CATEGORY_FIND_FAILURE,
+    UPLOAD_POST_REQUEST, UPLOAD_POST_SUCCESS, UPLOAD_POST_FAILURE, POST_EDIT_LOADING_REQUEST, POST_EDIT_LOADING_SUCCESS, POST_EDIT_LOADING_FAILURE, POST_EDIT_UPLOADING_REQUEST, POST_EDIT_UPLOADING_FAILURE, POST_EDIT_UPLOADING_SUCCESS, CATEGORY_FIND_REQUEST, CATEGORY_FIND_SUCCESS, CATEGORY_FIND_FAILURE, SEARCH_REQUEST, SEARCH_SUCCESS, SEARCH_FAILURE,
 
 } from "../types";
 
@@ -159,6 +159,27 @@ const reducer = (state = initialState, action) => {
                 loading: false,
                 categoryFindResult: action.data,
                 error: action.data,
+            }
+
+        case SEARCH_REQUEST:
+            return {
+                ...state,
+                posts: [], 
+                searchBy: action.data, // 무엇을 검색했는지를 넘겨받음
+                loading: true,
+            }
+        case SEARCH_SUCCESS: 
+            return {
+                ...state,
+                searchResult: action.data,
+                searchBy: action.data,
+                loading: false,
+            }
+        case SEARCH_FAILURE: 
+            return {
+                ...state,
+                loading: false,
+                searchResult: action.data,
             }
                 
     

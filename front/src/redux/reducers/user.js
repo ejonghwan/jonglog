@@ -2,7 +2,7 @@ import {
     LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE,
     CLEAR_ERROR_REQUEST, CLEAR_ERROR_SUCCESS, CLEAR_ERROR_FAILURE, 
     LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE, 
-    USER_LOAD_REQUEST, USER_LOAD_SUCCESS, USER_LOAD_FAILURE, SIGNUP_REQUEST, SIGNUP_SUCCESS, SIGNUP_FAILURE,
+    USER_LOAD_REQUEST, USER_LOAD_SUCCESS, USER_LOAD_FAILURE, SIGNUP_REQUEST, SIGNUP_SUCCESS, SIGNUP_FAILURE, PASSWORD_CHANGE_REQUEST, PASSWORD_CHANGE_SUCCESS, PASSWORD_CHANGE_FAILURE,
 
 } from '../types.js'
 
@@ -20,6 +20,7 @@ const initialState = {
     successMsg: '',
     dimd: null,
     categorys: [],
+    prevMsg: '',
 
 }
 
@@ -103,12 +104,12 @@ const reducer = (state = initialState, action) => {
         case SIGNUP_REQUEST: 
             return {
                 ...state,
-                isloading: true,
+                isLoading: true,
             }
         case SIGNUP_SUCCESS: 
             return {
                 ...state,
-                isloading: false,
+                isLoading: false,
                 // email: action.payload.email,
                 // name: action.payload.name,
                 // password: action.payload.password,
@@ -116,7 +117,7 @@ const reducer = (state = initialState, action) => {
         case SIGNUP_FAILURE: 
             return {
                 ...state,
-                isloading: false,
+                isLoading: false,
             }
 
 
@@ -135,6 +136,45 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 errorMsg: null,
+            }
+
+        case PASSWORD_CHANGE_REQUEST: 
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case PASSWORD_CHANGE_SUCCESS: 
+            return {
+                ...state,
+                isLoading: false,
+                successMsg: action.data.data.success, //서버에서 보내준 success json
+                errorMsg: '',
+                prevMsg: '',
+            }
+        case PASSWORD_CHANGE_FAILURE: 
+            return {
+                ...state,
+                isLoading: false,
+                successMsg: '', //서버에서 보내준 success json
+                errorMsg: action.data.data.match_error,
+                prevMsg: '',
+            }
+
+        // ???
+        case CLEAR_ERROR_REQUEST: 
+            return {
+                ...state,
+            }
+        case CLEAR_ERROR_SUCCESS: 
+            return {
+                ...state,
+                errorMsg: '',
+                prevMsg: '',
+            }
+        case CLEAR_ERROR_FAILURE: 
+            return {
+                ...state,
+                errorMsg: 'clear error fail',
             }
 
 

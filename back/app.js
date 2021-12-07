@@ -11,6 +11,7 @@ import morgan from 'morgan';
 import postsRoutes from './routes/api/posts.js'
 import userRoutes from './routes/api/user.js'
 import authRoutes from './routes/api/auth.js'
+import searchRoutes from './routes/api/search.js'
 
 const app = express()
 const { DB_INFO } = config
@@ -36,9 +37,10 @@ mongoose.connect(DB_INFO, {
 
 
 // routes
-app.get('/')
+// app.get('/')
 app.use('/api/post', postsRoutes)
 app.use('/api/user', userRoutes)
 app.use('/api/auth', authRoutes)
+app.use('/api/search', searchRoutes)
 
 export default app;

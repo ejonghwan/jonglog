@@ -3,8 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, Route } from 'react-router-dom';
 import { LOGOUT_REQUEST } from '../../redux/types.js';
 
+// components
 import LoginModal from '../auth/LoginModal.js'
 import SignupModal from '../auth/SignupModal.js'
+import Search from '../search/Search.js'
+
 
 
 
@@ -108,7 +111,7 @@ const Nav = () => {
                     </li>
                     <li>
                         <ul className="icon_box">
-                            <li>검색</li>
+                            <li><Search /></li>
                             <li>모모</li>
                             <li>블랙앤화이트</li>
                         </ul>

@@ -7,7 +7,7 @@ import {
     POST_DETAIL_LOADING_FAILURE,  POST_DETAIL_LOADING_REQUEST, POST_DETAIL_LOADING_SUCCESS, 
     POST_EDIT_LOADING_SUCCESS, POST_EDIT_LOADING_FAILURE, POST_EDIT_LOADING_REQUEST,
     UPLOAD_POST_FAILURE, UPLOAD_POST_REQUEST, UPLOAD_POST_SUCCESS, 
-    POST_EDIT_UPLOADING_REQUEST, POST_EDIT_UPLOADING_SUCCESS, POST_EDIT_UPLOADING_FAILURE, CATEGORY_FIND_REQUEST, CATEGORY_FIND_SUCCESS, CATEGORY_FIND_FAILURE, 
+    POST_EDIT_UPLOADING_REQUEST, POST_EDIT_UPLOADING_SUCCESS, POST_EDIT_UPLOADING_FAILURE, CATEGORY_FIND_REQUEST, CATEGORY_FIND_SUCCESS, CATEGORY_FIND_FAILURE, SEARCH_REQUEST, SEARCH_SUCCESS, SEARCH_FAILURE, 
 } from '../types.js'
 
 
@@ -218,7 +218,7 @@ function* categoryFind(action) {
     // saga action은 컴포넌트의 dispatch data 넘겨준 값인데 ... 왜 안되지 ? 된다 돼 해결됨
     try {
         const result = yield call(categoryFindApi, action.data)
-        console.log('카테고리 파인드 사가', result)
+        // console.log('카테고리 파인드 사가', result)
         yield put({
             type: CATEGORY_FIND_SUCCESS,
             data: result.data
@@ -238,6 +238,36 @@ function* watchCategoryFind() {
 
 
 
+// search request
+function searchApi(data) {
+    return axios.get(`/api/search/${encodeURIComponent(data)}`)
+}
+function* search(action) {
+    
+    try {
+        const result = yield call(searchApi, action.data)
+        console.log('숼취 사가', result)
+        yield put({
+            type: SEARCH_SUCCESS,
+            data: result.data
+        })
+        yield put(push(`/search/${encodeURIComponent(action.data)}`))
+    } catch(err) {
+        yield put({
+            type: SEARCH_FAILURE,
+            data: err.msg
+        })
+        // yield put(push('/'))
+    }
+}
+function* watchSearch() {
+    yield takeEvery(SEARCH_REQUEST, search)
+}
+
+
+
+
+
 
 
 function* posts() {
@@ -249,6 +279,7 @@ function* posts() {
         fork(watchPostEditLoad),
         fork(watchPostEditUpload),
         fork(watchCategoryFind),
+        fork(watchSearch),
     ])
 }
 
