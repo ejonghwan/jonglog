@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { useSelector } from 'react-redux'
-
+import { Helmet } from 'react-helmet'
 
 import Header from '../components/common/Header.js'
 import Footer from '../components/common/Footer.js'
@@ -24,6 +24,7 @@ import Category from '../components/category/Category.js'
 const RouterPage = () => {
 
     const { posts, categoryFindResult, postDetail } = useSelector(state => state.posts);
+    const { categorys } = useSelector(state => state.user)
     // const { user } = useSelector(state => state.user)
 
 
@@ -37,9 +38,10 @@ const RouterPage = () => {
 
     return(
         <Fragment>
+            <Helmet title="홈 | 종환 blog"></Helmet>
             <Header />
             <Main>
-                <Category categoryFindResult={categoryFindResult}/>
+                <Category categoryFindResult={categorys}/>
                 <Switch>
                     
                     <Route path="/" exact component={PostCardList}></Route>

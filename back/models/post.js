@@ -26,6 +26,12 @@ const PostSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "category",
     },
+    // categoryName: {
+    //     type: String,
+        
+    //     ref: 'category',
+    //     default: '미분류',
+    // },
     date: {
         type: String,
         default: moment().format("YYYY-MM-DD hh:mm:ss"),

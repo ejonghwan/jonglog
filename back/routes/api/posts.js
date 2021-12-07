@@ -60,10 +60,11 @@ router.get('/', async (req, res, next) => {
     try {
         const postFindResult = await Post.find();
         const categoryFindResult = await Category.find()
+
         const result = { postFindResult, categoryFindResult }
         // console.log(postFindResult, "All post")
-
         res.json(result)
+        
     } catch(err) {
         console.log(err)
     }

@@ -8,9 +8,26 @@ import Button from '../common/button/Button.js'
 
 const Category = ({ categoryFindResult }) => {
 
-
+    const dispatch = useDispatch()
     // console.log(categoryFindResult)
   
+
+    // const handleClick = (categoryName) => {
+    //     return () => {
+    //         dispatch({
+    //             type: CATEGORY_FIND_REQUEST,
+    //             data: categoryName
+    //         })
+    //     }
+    // }
+
+    const handleClick = (categoryName) => () => {
+            dispatch({
+                type: CATEGORY_FIND_REQUEST,
+                data: categoryName
+            })
+    }
+
 
     return (
         <Fragment>
@@ -18,7 +35,7 @@ const Category = ({ categoryFindResult }) => {
             {/* { posts && <Button value={posts} classN={'btn_point_t3'} /> } */}
             {Array.isArray(categoryFindResult) && categoryFindResult.map(item => {
                 return (
-                    <li key={item._id}>
+                    <li key={item._id} onClick={handleClick(item.categoryName)}>
                         <Link to={`/post/category/${item.categoryName}`}>
                             <Button value={`#${item.categoryName}`} classN={'btn_point_t3'} />
                         </Link>

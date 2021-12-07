@@ -21,7 +21,7 @@ const CategoryRoute = (req) => {
         console.log(categoryFindResult, '???????asdasd')
     }, [])
 
-    console.log(req.match)
+    // console.log(req.match)
 
     return (
         <Fragment>

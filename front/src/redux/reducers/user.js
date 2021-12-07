@@ -19,6 +19,7 @@ const initialState = {
     errorMsg: '',
     successMsg: '',
     dimd: null,
+    categorys: [],
 
 }
 
@@ -83,10 +84,11 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 isloading: false,
                 isAuthenticated: true,
-                user: action.payload,
-                userId: action.payload._id,
-                userName: action.payload.name,
-                userRole: action.payload.role,
+                user: action.payload.user,
+                userId: action.payload.user._id,
+                userName: action.payload.user.name,
+                userRole: action.payload.user.role,
+                categorys: action.payload.categoryFindResult,
             }
         case USER_LOAD_FAILURE: 
             return {

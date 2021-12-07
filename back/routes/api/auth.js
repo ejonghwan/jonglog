@@ -9,6 +9,7 @@ const { JWT_SECRET } = config
 
 //model
 import User from '../../models/user.js';
+import Category from '../../models/category.js'
 
 const router = express.Router();
 
@@ -63,10 +64,13 @@ router.post('/logout', (req, res) => {
 // @access   public
 router.get('/user', auth, async(req, res) => {
     try{
-        
+        const categoryFindResult = await Category.find()
         const user = await User.findById(req.user.id).select("-password") //select는 빼줌
         if(!user) throw Error("유저가 존재하지않음");
-        res.status(201).json(user)
+        // console.log('카테고리 가져오기 뭐가 나옴 ? ', categoryFindResult)
+        // res.status(201).json(user)
+        const result = {user, categoryFindResult}
+        res.status(201).json(result)
 
     } catch(err) {
         console.log(err);

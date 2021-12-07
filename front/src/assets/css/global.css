@@ -136,7 +136,7 @@ input[type="password"] {background: #fff;border: 1px solid rgba(240, 240, 240);p
 header, footer {flex: 0 0 auto;}
 main {border-top: 1px solid #ddd; width: 100%; flex: 1 1 auto;} 
 main .main_card_list {display: flex; flex-wrap: wrap; margin: -5px;;}
-main .main_card_list > li {flex: 1 1 auto; width: calc(25% - 10px);margin: 5px;}
+main .main_card_list > li {flex: 0 1 auto; width: calc(25% - 10px);margin: 5px; height: 330px; background: rgb(245, 245, 245);}
 
 
 

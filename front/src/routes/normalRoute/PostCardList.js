@@ -19,7 +19,7 @@ const PostCardList = () => {
 
     return (
         <Fragment>
-            <Helmet title="home"></Helmet>
+            
             { posts ? <Post posts={posts}/> : <LoadingBar /> }
         </Fragment>
     )
