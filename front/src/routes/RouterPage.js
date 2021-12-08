@@ -15,7 +15,7 @@ import PostWrite from './normalRoute/PostWrite.js'
 import Profile from './normalRoute/Profile'
 import Search from './normalRoute/Search'
 import Guide from '../components/common/Guide.js';
-import { EditProtectedRoute } from './protectedRoute/index.js';
+import { EditProtectedRoute, ProfileProtectedRoute } from './protectedRoute/index.js';
 import Category from '../components/category/Category.js'
 
 // import loadUser from '../components/auth/loadUser.js';
@@ -26,8 +26,12 @@ import axios from 'axios'
 const RouterPage = () => {
 
     const { posts, categoryFindResult, postDetail } = useSelector(state => state.posts);
-    const { categorys } = useSelector(state => state.user)
-    // const { user } = useSelector(state => state.user)
+    const { categorys, userName } = useSelector(state => state.user)
+
+
+    console.log('??? dbwjspldanadidajkskdnalsdnlkasda', userName)
+
+
 
 
     useEffect(() => {
@@ -79,6 +83,14 @@ const RouterPage = () => {
                     <EditProtectedRoute 
                         path="/post/:id/edit" exact component={PostEdit}
                     />
+                    <ProfileProtectedRoute 
+                        path="/user/:userName/profile"
+                        exact
+                        component={Profile}
+                    />
+
+
+
                     
                     {/* <Route path="*" component={ to="/" }/> */}
                     <Redirect from="*" to='/' />

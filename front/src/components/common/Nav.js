@@ -49,7 +49,10 @@ const Nav = () => {
             {userRole === "MainJuin" ? (
                 <Fragment>
                     <span className="line_r_t1">
-                        {user ? `안녕~ ${user.name }` : ""}
+                        <Link to={`/user/${user.name}/profile`}>
+                            
+                            {user ? `안녕~ ${user.name }` : ""}
+                        </Link>
                     </span>
                     <span className="line_r_t1"> 
                         <Link to="/post" onClick={addPostClick}>글쓰기</Link>
@@ -63,7 +66,9 @@ const Nav = () => {
                 <Fragment>
                     {user && user.name ? (
                         <Fragment>
-                            {user ? `안녕~ ${user.name }님` : ""}
+                            <Link to={`/user/${user.name}/profile`}>
+                                {user ? `안녕~ ${user.name }님` : ""}
+                            </Link>
                         </Fragment>
                     ) : (
                         <button>

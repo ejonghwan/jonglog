@@ -8,6 +8,9 @@ import {
     CLEAR_ERROR_SUCCESS,
     LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS,
     LOGOUT_FAILURE, LOGOUT_REQUEST, LOGOUT_SUCCESS, 
+    PASSWORD_CHANGE_FAILURE, 
+    PASSWORD_CHANGE_REQUEST, 
+    PASSWORD_CHANGE_SUCCESS, 
     SIGNUP_REQUEST, 
     SIGNUP_SUCCESS, 
     USER_LOAD_FAILURE, USER_LOAD_REQUEST, USER_LOAD_SUCCESS,
@@ -132,6 +135,43 @@ function* clearerror() {
 
 
 
+function editPasswordApi(data) {
+    // console.log(loginData, "loginData")
+    const token = data.token;
+    const config = {
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }
+    if(token) {
+        config.headers["x-auth-token"] = token
+    }
+    return axios.post(`/api/user/${data.userName}/profile`, data, config)
+}
+
+function* editPassword(action) {
+    try {
+        const result = yield call(editPasswordApi, action.data);
+        // console.log('saga editPasswording', result)
+        yield put({
+            type: PASSWORD_CHANGE_SUCCESS,
+            payload: result.data
+        })
+    } catch(err) {
+        yield put({
+            type: PASSWORD_CHANGE_FAILURE,
+            payload: err.response,
+        })
+    }
+}
+
+function* watchEditPassword() {
+    yield takeEvery(PASSWORD_CHANGE_REQUEST, editPassword)
+}
+
+
+
+
 function* watchLoginUser() {
     yield takeEvery(LOGIN_REQUEST, loginUser)
 }
@@ -160,6 +200,7 @@ export default function* authSaga() {
         fork(watchUserload),
         fork(watchSignup),
         fork(errorClear),
+        fork(watchEditPassword),
 
     ])
 }
