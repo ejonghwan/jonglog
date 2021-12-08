@@ -23,6 +23,7 @@ const s3 = new aws.S3({
     secretAccessKey: process.env.AWS_PRIVATE_KEY,
 })
 
+
 const uploadS3 = multer({
     storage: multers3({
         s3,
@@ -36,6 +37,8 @@ const uploadS3 = multer({
     }),
     limits: {fileSize: 100*1024*1024},
 })
+
+
 
 
 // @routes   POST api/post/image
@@ -58,8 +61,8 @@ router.post('/image', uploadS3.array("upload", 5), async (req, res, next) => {
 router.get('/', async (req, res, next) => {
 
     try {
-        const postFindResult = await Post.find();
         const categoryFindResult = await Category.find()
+        const postFindResult = await Post.find();
 
         const result = { postFindResult, categoryFindResult }
         // console.log(postFindResult, "All post")
@@ -77,8 +80,9 @@ router.get('/', async (req, res, next) => {
 // @desc     Create a Post
 // @access   private
 router.post('/', auth, uploadS3.none(), async (req, res, next) => {
+    
     try {
-        console.log(req.user, '이거 꼭 확인 아이디 req')
+        // console.log(req.user, '이거 꼭 확인 아이디 req')
 
         const { title, contents, fileUrl, creator, category } = req.body; 
         const newPost = await Post.create({
@@ -86,6 +90,7 @@ router.post('/', auth, uploadS3.none(), async (req, res, next) => {
             contents,
             fileUrl,
             creator: req.user.id,
+            categoryName: category,
             // date: moment.format('YYYY-MM-DD hh:mm:ss')
         });
 
@@ -100,7 +105,9 @@ router.post('/', auth, uploadS3.none(), async (req, res, next) => {
             })
             // 포스트를 찾아서 카테고리와 연결
             await Post.findByIdAndUpdate(newPost._id, {
-                $push: { category: newCategory._id } //$달러표시는 배열로 넣어줌
+                $push: { 
+                    category: newCategory._id,
+                } //$달러표시는 배열로 넣어줌
             })
             // 카테고리를 찾아서 포스트와 연결
             await Category.findByIdAndUpdate(newCategory._id, {
@@ -118,14 +125,15 @@ router.post('/', auth, uploadS3.none(), async (req, res, next) => {
             })
             await Post.findByIdAndUpdate(newPost._id, {
                 category: findCaterory._id,
+                categoryName: findCaterory.categoryName,
             })
             await User.findByIdAndUpdate(req.user.id, {
                 $push: { posts: newPost._id }
             })
         }
         
-        res.redirect(`/api/post/${newPost._id}`)
-        // return res.json('tlqkf')
+        res.redirect(`/api/post/${newPost._id}`) //보내준 주소로 ..사가쪽에서 react router 작업 해야됨 
+       
 
         // res.json(newPost)
 
@@ -142,7 +150,7 @@ router.get('/:id', async(req, res, next) => {
     try {
         const post = await Post.findById(req.params.id).populate('creator', 'name').populate({ path: 'category', select: 'categoryName' }) //populate는 모델에 있는 object.id로 연결되어있는 것들을?  만들어달란 요청 ?
         const categoryFindResult = await Category.find()
-        const result = {post, categoryFindResult}
+        // const result = {post, categoryFindResult}
         post.views += 1
         post.save()
         
@@ -303,6 +311,9 @@ router.get('/category/:categoryName', async (req, res) => {
         console.log(err)
     }
 })
+
+
+
 
 
 export default router;

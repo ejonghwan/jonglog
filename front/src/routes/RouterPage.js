@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { useHistory, Redirect, Route, Switch } from 'react-router-dom';
 import { useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
 
@@ -20,6 +20,8 @@ import Category from '../components/category/Category.js'
 
 // import loadUser from '../components/auth/loadUser.js';
 
+// test
+import axios from 'axios'
 
 const RouterPage = () => {
 
@@ -34,6 +36,24 @@ const RouterPage = () => {
         // }
        
     }, [categoryFindResult])
+
+
+
+
+    // 리다이렉트 테스트 서버쪽엔 app.js
+    // const history = useHistory();
+    // console.log(history)
+
+    // useEffect( async () => {
+    //     const config = {
+    //         headers: {
+    //             "hohohehehe": "asdasdasdasdasdasd value"
+    //         }
+    //     }
+    //     const aa = await axios.post('http://localhost:3000/test/hoho', { name: "jonghwan" }, config)
+    //     history.push(`/test/hoho/${aa.data.pay}`)
+    //     await console.log('asdassad???', aa)
+    // }, [])
     
 
     return(
@@ -50,6 +70,9 @@ const RouterPage = () => {
                     <Route path="/post" exact component={PostWrite}></Route>
                     <Route path="/search/:searchTerm" exact component={Search}></Route>
                     <Route path="/guide" exact component={Guide} ></Route>
+
+                    {/* 리다이렉트 테스트 */}
+                    {/* <Route path="/test/hoho/jonghwan" exact component={Guide} ></Route> */}
 
 
                     {/* <Route path="/post/:id/edit" exact component={PostEdit} /> */}

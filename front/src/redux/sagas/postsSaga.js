@@ -50,7 +50,7 @@ function uploadPostApi(data) {
         config.headers["x-auth-token"] = token
     }
 
-    console.log('이거 꼭 꼭: ', data, config)
+    // console.log('이거 꼭 꼭: ', data, config)
     return axios.post('/api/post', data, config)
 }
 function* uploadPost(action) {

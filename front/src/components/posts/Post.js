@@ -8,8 +8,9 @@ import { useSelector } from 'react-redux'
 const Post = ({ posts }) => {
 
     const { categoryFindResult } = useSelector(state => state.posts)
-    console.log(categoryFindResult)
+    // console.log(categoryFindResult)
 
+    
     useEffect(() => {
         console.log("post: ", posts)
     }, [])
@@ -19,7 +20,7 @@ const Post = ({ posts }) => {
             
             <ul className="main_card_list">
             {
-                Array.isArray(posts) ? posts.map(({ _id, title, fileUrl, comments, views, category }, idx) => {
+                Array.isArray(posts) ? posts.map(({ _id, title, fileUrl, comments, views, category, categoryName, contents }, idx) => {
                     return (
                         <li key={_id} >
                             <Link to={`/post/${_id}`}>
@@ -32,6 +33,10 @@ const Post = ({ posts }) => {
                                     {/* &nbsp;  */}
                                     <span className="view_num">{`조회 ${views}`}</span>
                                     <span>{`댓글 ${comments.length}`}</span>
+                                    <span>{categoryName}</span>
+                                    <br /><br />
+                                    {/* <span>{contents}</span> */}
+                                    
 
                                 </article>
                             </Link>
