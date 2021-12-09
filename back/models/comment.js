@@ -20,7 +20,21 @@ const CommentSchema = new mongoose.Schema({
     },
     creatorName: {
         type: String,
-    }
+    },
+    recomment: [{
+        creator: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'user',
+        }, 
+        contents: {
+            type: String,
+            required: true,
+        },
+        date: {
+            type: String,
+            default: moment().format("YYYY-MM-DD hh:mm:ss")
+        },
+    }]
 })
 
 const Comment = mongoose.model("comment", CommentSchema)
