@@ -2,17 +2,22 @@ import React, { useState, Fragment, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { COMMENT_UPLOADING_REQUEST } from '../../redux/types';
 
+
+// components
+import Recomment from './ReComment.js'
+
+
 const Comments = ({ postId, userId, userName }) => {
 
     const dispatch = useDispatch()
     const [form, setValues] = useState({ contents: '' })
 
 
-    console.log(form)
+    // console.log(form)
 
     const handleChange = e => {
         e.preventDefault();
-        console.log(form)
+        // console.log(form)
         setValues({
             ...form,
             [e.target.name]: e.target.value,
@@ -42,9 +47,9 @@ const Comments = ({ postId, userId, userName }) => {
     }
 
     const resetValue = useRef(null)
-    useEffect(() => {
-        console.log(resetValue)
-    }, [])
+    // useEffect(() => {
+    //     console.log(resetValue)
+    // }, [])
 
 
     return (
@@ -56,6 +61,10 @@ const Comments = ({ postId, userId, userName }) => {
                     <button type="submit">comment</button>
                 </div>
             </form>
+            <form>
+                
+            </form>
+            
         </Fragment>
     )
 }

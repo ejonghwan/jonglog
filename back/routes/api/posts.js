@@ -149,7 +149,7 @@ router.post('/', auth, uploadS3.none(), async (req, res, next) => {
 router.get('/:id', async(req, res, next) => {
     try {
         const post = await Post.findById(req.params.id).populate('creator', 'name').populate({ path: 'category', select: 'categoryName' }) //populate는 모델에 있는 object.id로 연결되어있는 것들을?  만들어달란 요청 ?
-        const categoryFindResult = await Category.find()
+        // const categoryFindResult = await Category.find()
         // const result = {post, categoryFindResult}
         post.views += 1
         post.save()
@@ -187,7 +187,7 @@ router.get('/:id/comments', async(req, res) => {
 // @routes   POST api/post/:id/comments
 // @desc     create comments
 // @access   private
-router.post('/:id/comments', async(req, res, next) => {
+router.post('/:id/comments', auth, async(req, res, next) => {
     try {
         console.log(req.body, '레큐바디 아이디 !!!!!!!! 아오')
         const createComment = await Comment.create({
@@ -254,6 +254,36 @@ router.delete('/:id', auth, async(req, res) => {
         })
     }
 })
+
+// @routes   Post api/post/comment/recomment
+// @desc     edit post
+// @access   private
+router.post('/comment/recomment', auth, async (req, res) => {
+    try {
+
+        console.log('대댓글 페이로드 : ', req.body )
+        const parentComment = await Comment.findOneAndUpdate({
+            _id: req.body.commentId
+        }, {
+            $push: {
+                recomment: {
+                    creator: req.body.userName,
+                    contents: req.body.contents,
+                    date: req.body.date,
+                }
+            },
+        },
+        { new: true },
+        )
+
+        parentComment.save()
+        res.status(200).json(parentComment)
+        
+    } catch(err) {
+        console.log(err)
+    }
+})
+
 
 
 // @routes   Get api/post/:id/edit

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { 
     COMMENT_LOADING_FAILURE, COMMENT_LOADING_REQUEST, COMMENT_LOADING_SUCCESS, 
     COMMENT_UPLOADING_REQUEST, COMMENT_UPLOADING_SUCCESS, COMMENT_UPLOADING_FAILURE,
+    RECOMMENT_UPLOAD_REQUEST, RECOMMENT_UPLOAD_SUCCESS, RECOMMENT_UPLOAD_FAILURE, 
 } from '../types.js'
 
 
@@ -38,8 +39,18 @@ function* watchLoadComment() {
 
 // upload commnet
 function uploadCommentApi(data) {
+    const config = {
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }
+    // const token = data.token
+    const token = localStorage.getItem('token')
+    if(token) {
+        config.headers["x-auth-token"] = token
+    }
     // console.log('업로드 사가 데이터??', data)
-    return axios.post(`/api/post/${data.postId}/comments`, data)
+    return axios.post(`/api/post/${data.postId}/comments`, data, config)
 }
 
 
@@ -61,7 +72,54 @@ function* uploadComment(action) {
 
 function* watchupLoadComment() {
     yield takeEvery(COMMENT_UPLOADING_REQUEST, uploadComment)
+    console.log(123123123123)
 }
+
+
+
+
+
+
+
+// recomment 
+function recommentApi(data) {
+    const config = {
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }
+    const token = localStorage.getItem('token');
+    if(token) {
+        config.headers['x-auth-token'] = token;
+    }
+    console.log('리코멘트 리덕스 사가쪽 콘피그', config)
+
+    return axios.post(`/api/post/comment/recomment`, data, config)
+}
+
+function* recomment(action) {
+    try {
+        const result = yield call(recommentApi, action.data)
+        console.log('리코멘트 사과', result)
+        yield put({
+            type: RECOMMENT_UPLOAD_SUCCESS,
+            data: result.data
+        })
+        // yield put(push(`/recomment/${encodeURIComponent(action.data)}`))
+    } catch(err) {
+        yield put({
+            type: RECOMMENT_UPLOAD_FAILURE,
+            data: err.msg
+        })
+        // yield put(push('/'))
+    }
+}
+function* watchRecomment() {
+    yield takeEvery(RECOMMENT_UPLOAD_REQUEST, recomment)
+}
+
+
+
 
 
 
@@ -69,6 +127,7 @@ export default function* commentSaga() {
     yield all([
         fork(watchLoadComment),
         fork(watchupLoadComment),
+        fork(watchRecomment),
 
     ])
 }

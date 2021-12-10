@@ -29,7 +29,7 @@ const RouterPage = () => {
     const { categorys, userName } = useSelector(state => state.user)
 
 
-    console.log('??? dbwjspldanadidajkskdnalsdnlkasda', userName)
+    // console.log('??? dbwjspldanadidajkskdnalsdnlkasda', userName)
 
 
 

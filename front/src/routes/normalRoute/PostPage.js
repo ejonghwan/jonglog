@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useEffect, useRef } from 'react';
+import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import {} from 'react-helmet'
 import { Link, useParams, useLocation, useNavigate } from 'react-router-dom'
@@ -7,7 +7,14 @@ import { CKEditor } from '@ckeditor/ckeditor5-react'
 // import CKEditor from '@ckeditor/ckeditor5-react' 아씨 절대 이렇게 쓰면 안됨 --
 import BallonEditor from '@ckeditor/ckeditor5-editor-balloon/src/ballooneditor'
 import { editorConfiguration } from '../../components/editor/Edit.js';
+
+
+// components
 import Comments from '../../components/comments/Comments.js';
+import Recomment from '../../components/comments/ReComment.js'
+import CommentPage from '../../components/comments/CommentPage.js'
+
+
 
 const PostPage = (req) => {
 
@@ -18,6 +25,7 @@ const PostPage = (req) => {
     const { userId, userName, isAuthenticated } = useSelector(state => state.user)
     const { comments } = useSelector(state => state.comment)
 
+
     
     // console.log(comments, '아니 왜 안돼 ')
     // console.log(postDetail, creatorId, title, loading)
@@ -25,7 +33,7 @@ const PostPage = (req) => {
     // console.log(ma)
 
     useEffect(() => {
-        console.log('asdasdasdasd', req)
+        // console.log('asdasdasdasd', req)
         dispatch({
             type: POST_DETAIL_LOADING_REQUEST,
             // data: params.id,
@@ -40,7 +48,7 @@ const PostPage = (req) => {
             // data: params.id,
             data: req.match.params.id,
         })
-    }, [])
+    }, [dispatch])
 
     const handleDelete = useCallback(e => {
         dispatch({
@@ -51,7 +59,9 @@ const PostPage = (req) => {
                 token: localStorage.getItem('token')
             }
         })
-    }, [])
+    }, [dispatch])
+
+   
 
     const EditButton = (
         <Fragment>
@@ -97,13 +107,9 @@ const PostPage = (req) => {
                         <hr />
                         <p>!!comment</p>
                         <div>
-                            {Array.isArray(comments) ? comments.map( ({ contents, creator, date, _id, creatorName }) => {
+                            {Array.isArray(comments) ? comments.map( item => {
                                 return (
-                                        <div key={_id}>
-                                            <div>작성자: {creatorName ? creatorName : creator}</div>
-                                            <div>시간: {date}</div>
-                                            <div>내용: {contents}</div>
-                                        </div>
+                                    <CommentPage key={item._id} comments={item}/>
                                 )
                             }) : (
                                 <Fragment>
@@ -119,6 +125,7 @@ const PostPage = (req) => {
                                 userId={userId}
                                 userName={userName}
                             />
+                            
                         </div>
                     </Fragment>
                 ) : (

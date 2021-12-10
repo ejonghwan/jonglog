@@ -1,7 +1,8 @@
 
 import { 
     COMMENT_LOADING_FAILURE, COMMENT_LOADING_REQUEST, COMMENT_LOADING_SUCCESS,
-    COMMENT_UPLOADING_FAILURE, COMMENT_UPLOADING_REQUEST, COMMENT_UPLOADING_SUCCESS 
+    COMMENT_UPLOADING_FAILURE, COMMENT_UPLOADING_REQUEST, COMMENT_UPLOADING_SUCCESS,
+    RECOMMENT_UPLOAD_REQUEST, RECOMMENT_UPLOAD_SUCCESS, RECOMMENT_UPLOAD_FAILURE,
 } from '../types.js';
 
 
@@ -59,6 +60,24 @@ const reducer = (state = initialState, action) => {
                 loading: false,
             }
         }
+
+
+        case RECOMMENT_UPLOAD_REQUEST:
+            return {
+                ...state,
+                creatorId:'hohohoho',
+                loading: true,
+            }
+        case RECOMMENT_UPLOAD_SUCCESS: 
+            return {
+                ...state,
+                loading: false,
+            }
+        case RECOMMENT_UPLOAD_FAILURE: 
+            return {
+                ...state,
+                loading: false,
+            }
             
     
         default: return { ...state };

@@ -85,7 +85,7 @@ function loadPostDetailApi(data) {
 function* loadPostDetail(action) {
     try {
         const result = yield call(loadPostDetailApi, action.data)
-        console.log('detail', result)
+        // console.log('detail', result)
         yield put({
             type: POST_DETAIL_LOADING_SUCCESS,
             data: result.data
@@ -263,7 +263,6 @@ function* search(action) {
 function* watchSearch() {
     yield takeEvery(SEARCH_REQUEST, search)
 }
-
 
 
 
