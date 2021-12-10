@@ -28,11 +28,15 @@ const CommentPage = ({ comments }) => {
                 <div>작성자: {comments.creatorName ? comments.creatorName : comments.creator}</div>
                 <div>시간: {comments.date}</div>
                 <div>내용: {comments.contents}</div>
+                {comments.recomment && comments.recomment.map(({ userName, contents, date }) => {
+                    return (
+                        <div>{`이름 ${userName} |   ${contents} |   ${date}`}</div>
+                    )
+                })}
                 <br /><hr />
                 <button onClick={handleComment}>댓글달기</button>
                 {commentTogle && <Recomment comments={comments}/>}
-                <div>{comments.recomment[0]}</div>
-
+               
                 <br /><br />                
             </div>
         </Fragment>

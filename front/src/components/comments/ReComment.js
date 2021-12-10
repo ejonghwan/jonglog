@@ -1,26 +1,42 @@
 import React, { Fragment, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { RECOMMENT_UPLOAD_REQUEST } from '../../redux/types';
+import { RECOMMENT_UPLOAD_REQUEST, POST_DETAIL_LOADING_REQUEST, COMMENT_LOADING_REQUEST, USER_LOAD_REQUEST } from '../../redux/types';
 
 
 
 const Recomment = ({ comments }) => {
 
-    // console.log('asdasdasd', comments._id)
+    // console.log('asdasdasd', req)
 
     const [form, setValues] = useState({ contents: ''})
     const { userName, userId } = useSelector(state => state.user)
     const dispatch = useDispatch();
+
+    
 
     const handleSubmit = e => {
         
         e.preventDefault();
         dispatch({
             type: RECOMMENT_UPLOAD_REQUEST,
-            data: { userName: userName, contents: form.contents, commentId: comments._id, userId: userId},
+            data: { userName: userName, contents: form.contents, commentId: comments._id, userId: userId, postId: comments.post},
+        })
+        dispatch({
+            type: POST_DETAIL_LOADING_REQUEST,
+            // data: params.id,
+            data: comments.post,
+        })
+        dispatch({
+            type: USER_LOAD_REQUEST,
+            data: localStorage.getItem('token'),
+        })
+        dispatch({
+            type: COMMENT_LOADING_REQUEST,
+            // data: params.id,
+            data: comments.post,
         })
 
-        console.log({ userName: userName, contents: form.contents, commentId: comments._id, userId: userId, })
+        console.log({ userName: userName, contents: form.contents, commentId: comments._id})
     }
 
     const handleChange = e => {

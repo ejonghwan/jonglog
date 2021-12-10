@@ -1,11 +1,11 @@
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
+import { push,  } from 'connected-react-router'
 import axios from 'axios';
 import { 
     COMMENT_LOADING_FAILURE, COMMENT_LOADING_REQUEST, COMMENT_LOADING_SUCCESS, 
     COMMENT_UPLOADING_REQUEST, COMMENT_UPLOADING_SUCCESS, COMMENT_UPLOADING_FAILURE,
     RECOMMENT_UPLOAD_REQUEST, RECOMMENT_UPLOAD_SUCCESS, RECOMMENT_UPLOAD_FAILURE, 
 } from '../types.js'
-
 
 
 
@@ -72,7 +72,6 @@ function* uploadComment(action) {
 
 function* watchupLoadComment() {
     yield takeEvery(COMMENT_UPLOADING_REQUEST, uploadComment)
-    console.log(123123123123)
 }
 
 
@@ -100,12 +99,12 @@ function recommentApi(data) {
 function* recomment(action) {
     try {
         const result = yield call(recommentApi, action.data)
-        console.log('리코멘트 사과', result)
+        console.log('리코멘트 사과', result.data.post)
         yield put({
             type: RECOMMENT_UPLOAD_SUCCESS,
             data: result.data
         })
-        // yield put(push(`/recomment/${encodeURIComponent(action.data)}`))
+        // yield put(push(`/post/${result.data.post}`)) 이거아이다
     } catch(err) {
         yield put({
             type: RECOMMENT_UPLOAD_FAILURE,

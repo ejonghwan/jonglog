@@ -262,7 +262,7 @@ router.post('/comment/recomment', auth, async (req, res) => {
     try {
 
         console.log('대댓글 페이로드 : ', req.body )
-        const creatorFind = await User.findOne(req.body.userId) //얘 유저에 밀어넣어야됨 아직작업안함
+        const creatorFind = await User.findOne({ _id: req.body.userId }) //얘 유저에 밀어넣어야됨 아직작업안함
         const parentComment = await Comment.findOneAndUpdate({
             _id: req.body.commentId
         }, {
@@ -272,6 +272,7 @@ router.post('/comment/recomment', auth, async (req, res) => {
                     userName: req.body.userName,
                     contents: req.body.contents,
                     date: req.body.date,
+                    postId: req.body.postId,
                 }
             },
         },
@@ -279,7 +280,8 @@ router.post('/comment/recomment', auth, async (req, res) => {
         )
 
         parentComment.save()
-        res.status(200).json(parentComment)
+        res.redirect(`/api/post/${req.body.postId}`);
+        // res.status(200).json(parentComment)
         
     } catch(err) {
         console.log(err)

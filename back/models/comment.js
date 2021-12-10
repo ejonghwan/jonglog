@@ -34,6 +34,10 @@ const CommentSchema = new mongoose.Schema({
             type: String,
             required: true,
         },
+        postId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'posts',
+        },
         date: {
             type: String,
             default: moment().format("YYYY-MM-DD hh:mm:ss")
