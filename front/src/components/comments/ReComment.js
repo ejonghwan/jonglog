@@ -9,7 +9,7 @@ const Recomment = ({ comments }) => {
     // console.log('asdasdasd', comments._id)
 
     const [form, setValues] = useState({ contents: ''})
-    const { userName } = useSelector(state => state.user)
+    const { userName, userId } = useSelector(state => state.user)
     const dispatch = useDispatch();
 
     const handleSubmit = e => {
@@ -17,10 +17,10 @@ const Recomment = ({ comments }) => {
         e.preventDefault();
         dispatch({
             type: RECOMMENT_UPLOAD_REQUEST,
-            data: { userName: userName, contents: form.contents, commentId: comments._id }
+            data: { userName: userName, contents: form.contents, commentId: comments._id, userId: userId},
         })
 
-        console.log({ userName: userName, contents: form.contents, commentId: comments._id })
+        console.log({ userName: userName, contents: form.contents, commentId: comments._id, userId: userId, })
     }
 
     const handleChange = e => {

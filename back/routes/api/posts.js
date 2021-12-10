@@ -262,12 +262,14 @@ router.post('/comment/recomment', auth, async (req, res) => {
     try {
 
         console.log('대댓글 페이로드 : ', req.body )
+        const creatorFind = await User.findOne(req.body.userId) //얘 유저에 밀어넣어야됨 아직작업안함
         const parentComment = await Comment.findOneAndUpdate({
             _id: req.body.commentId
         }, {
             $push: {
                 recomment: {
-                    creator: req.body.userName,
+                    creator: req.body.userId,
+                    userName: req.body.userName,
                     contents: req.body.contents,
                     date: req.body.date,
                 }
