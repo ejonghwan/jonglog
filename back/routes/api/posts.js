@@ -218,9 +218,27 @@ router.post('/:id/comments', auth, async(req, res, next) => {
     }
 })
 
+// @routes   POST api/post/:id/comment/edit
+// @desc     edit comment
+// @access   private
+router.post('/:id/comment/edit', auth, async (req, res) => {
+    // 작업전 정리 ..req.body : commentid contents  필요함 date는 서버에서.. (수정되었을 땐 date 수정됨 메시지도 같이 표시해야됨)
+    try {
+        const findComment = await Comment.findByIdAndUpdate(req.body.commentId, {
+            $push: {
+                contents: req.body.contents,
+                date: moment().format('YYYY-MM-DD hh:mm:ss')
+            }
+        })
+        res.status(200).json(findComment)
+    } catch(err) {
+        console.log(err)
+    }
+})
+
 
 // @routes   Delete api/post/:id/
-// @desc     delete
+// @desc     post delete
 // @access   private
 router.delete('/:id', auth, async(req, res) => {
     try {
@@ -256,13 +274,15 @@ router.delete('/:id', auth, async(req, res) => {
 })
 
 // @routes   Post api/post/comment/recomment
-// @desc     edit post
+// @desc     recomment create
 // @access   private
 router.post('/comment/recomment', auth, async (req, res) => {
     try {
 
         console.log('대댓글 페이로드 : ', req.body )
-        const creatorFind = await User.findOne({ _id: req.body.userId }) //얘 유저에 밀어넣어야됨 아직작업안함
+        // const creatorFind = await User.findOne({ _id: req.body.userId }) //얘 유저에 밀어넣어야됨 아직작업안함
+        // console.log('작성자 찾기??', creatorFind) // 이거 할 필요 없음. 유저에 코멘트 아이디가 이미 들어가있어서 그거로 죠회하면 됨. 코멘트 table에 row이기 떄문
+
         const parentComment = await Comment.findOneAndUpdate({
             _id: req.body.commentId
         }, {
@@ -293,7 +313,7 @@ router.post('/comment/recomment', auth, async (req, res) => {
 // @routes   Get api/post/:id/edit
 // @desc     edit post
 // @access   private
-router.get('/:id/edit', auth, async (req, res, next) => { // 수정전 해당 게시물 찾기
+router.get('/:id/edit', auth, async (req, res) => { // 수정전 해당 게시물 찾기
     try {
         const post = await Post.findById(req.params.id).papulate('creator', 'name')
         res.json(post)
@@ -311,7 +331,7 @@ router.post('/:id/edit', auth, async(req, res, next) => {
 
     try {
         const modifiedPost = await Post.findByIdAndUpdate(
-            id, { title, contents, fileUrl, date:moment().format('YYYY-mm-dd hh:mm:ss') },
+            id, { title, contents, fileUrl, date: moment().format('YYYY-mm-dd hh:mm:ss') },
             { new: true }
         )
         // console.log(modifiedPost)

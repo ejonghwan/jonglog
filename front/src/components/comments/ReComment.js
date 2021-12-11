@@ -14,23 +14,26 @@ const Recomment = ({ comments }) => {
 
     
 
-    const handleSubmit = e => {
+    const handleSubmit = async e => {
         
         e.preventDefault();
-        dispatch({
+        await dispatch({
             type: RECOMMENT_UPLOAD_REQUEST,
             data: { userName: userName, contents: form.contents, commentId: comments._id, userId: userId, postId: comments.post},
         })
-        dispatch({
+
+
+        // 얘가 될때있고 안될때 있음 확인해야됨 그리고 왜 세개가 있어야 리다이렉트 되는건지도 ...
+        await dispatch({
             type: POST_DETAIL_LOADING_REQUEST,
             // data: params.id,
             data: comments.post,
         })
-        dispatch({
+        await dispatch({
             type: USER_LOAD_REQUEST,
             data: localStorage.getItem('token'),
         })
-        dispatch({
+        await dispatch({
             type: COMMENT_LOADING_REQUEST,
             // data: params.id,
             data: comments.post,

@@ -28,6 +28,10 @@ const CommentPage = ({ comments }) => {
                 <div>작성자: {comments.creatorName ? comments.creatorName : comments.creator}</div>
                 <div>시간: {comments.date}</div>
                 <div>내용: {comments.contents}</div>
+                <div>
+                    <button>수정</button>|
+                    <button>삭제</button>
+                </div>
                 {comments.recomment && comments.recomment.map(({ userName, contents, date }) => {
                     return (
                         <div>{`이름 ${userName} |   ${contents} |   ${date}`}</div>

@@ -99,7 +99,7 @@ function recommentApi(data) {
 function* recomment(action) {
     try {
         const result = yield call(recommentApi, action.data)
-        console.log('리코멘트 사과', result.data.post)
+        console.log('리코멘트 사과', result)
         yield put({
             type: RECOMMENT_UPLOAD_SUCCESS,
             data: result.data

@@ -38,6 +38,14 @@ const UserSchema = new Schema({
             },
         }
     ],
+    recomment: [
+        {
+            recomment_id: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'comment',
+            }
+        }
+    ],
 
     posts: [
         {
