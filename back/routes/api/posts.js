@@ -218,18 +218,20 @@ router.post('/:id/comments', auth, async(req, res, next) => {
     }
 })
 
-// @routes   POST api/post/:id/comment/edit
+// @routes   POST api/post/comment/edit
 // @desc     edit comment
 // @access   private
-router.post('/:id/comment/edit', auth, async (req, res) => {
+router.post('/comment/edit', auth, async (req, res) => {
     // 작업전 정리 ..req.body : commentid contents  필요함 date는 서버에서.. (수정되었을 땐 date 수정됨 메시지도 같이 표시해야됨)
     try {
         const findComment = await Comment.findByIdAndUpdate(req.body.commentId, {
-            $push: {
-                contents: req.body.contents,
-                date: moment().format('YYYY-MM-DD hh:mm:ss')
-            }
-        })
+            contents: req.body.contents,
+            date: moment().format('YYYY-MM-DD hh:mm:ss')
+            
+        },
+        {new: true}
+        )
+        findComment.save();
         res.status(200).json(findComment)
     } catch(err) {
         console.log(err)
@@ -311,7 +313,7 @@ router.post('/comment/recomment', auth, async (req, res) => {
 
 
 // @routes   Get api/post/:id/edit
-// @desc     edit post
+// @desc     get post one
 // @access   private
 router.get('/:id/edit', auth, async (req, res) => { // 수정전 해당 게시물 찾기
     try {
@@ -330,8 +332,12 @@ router.post('/:id/edit', auth, async(req, res, next) => {
     const { body: { title, contents, fileUrl, id } } = req;
 
     try {
-        const modifiedPost = await Post.findByIdAndUpdate(
-            id, { title, contents, fileUrl, date: moment().format('YYYY-mm-dd hh:mm:ss') },
+        const modifiedPost = await Post.findByIdAndUpdate(id, { 
+            title, 
+            contents, 
+            fileUrl, 
+            date: moment().format('YYYY-MM-DD hh:mm:ss') 
+        },
             { new: true }
         )
         // console.log(modifiedPost)

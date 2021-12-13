@@ -4,7 +4,7 @@ import axios from 'axios';
 import { 
     COMMENT_LOADING_FAILURE, COMMENT_LOADING_REQUEST, COMMENT_LOADING_SUCCESS, 
     COMMENT_UPLOADING_REQUEST, COMMENT_UPLOADING_SUCCESS, COMMENT_UPLOADING_FAILURE,
-    RECOMMENT_UPLOAD_REQUEST, RECOMMENT_UPLOAD_SUCCESS, RECOMMENT_UPLOAD_FAILURE, 
+    RECOMMENT_UPLOAD_REQUEST, RECOMMENT_UPLOAD_SUCCESS, RECOMMENT_UPLOAD_FAILURE, COMMENT_EDIT_SUCCESS, COMMENT_EDIT_FAILURE, COMMENT_EDIT_REQUEST, 
 } from '../types.js'
 
 
@@ -76,6 +76,46 @@ function* watchupLoadComment() {
 
 
 
+// edit commnet
+function editCommentApi(data) {
+    const config = {
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }
+    // const token = data.token
+    const token = localStorage.getItem('token')
+    if(token) {
+        config.headers["x-auth-token"] = token
+    }
+    // console.log('업로드 사가 데이터??', data)
+    return axios.post(`/api/post/comments/edit`, data, config)
+}
+
+
+function* editComment(action) {
+    try {
+        const result = yield call(editCommentApi, action.data);
+        // console.log(result)
+        yield put({
+            type: COMMENT_EDIT_SUCCESS,
+            data: result.data
+        })
+    } catch(err) {
+        yield put({
+            type: COMMENT_EDIT_FAILURE,
+            data: err.response,
+        })
+    }
+}
+
+function* watchEditComment() {
+    yield takeEvery(COMMENT_EDIT_REQUEST, editComment)
+}
+
+
+
+
 
 
 
@@ -121,13 +161,12 @@ function* watchRecomment() {
 
 
 
-
 export default function* commentSaga() {
     yield all([
         fork(watchLoadComment),
         fork(watchupLoadComment),
         fork(watchRecomment),
-
+        fork(watchEditComment),
     ])
 }
 

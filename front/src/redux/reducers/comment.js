@@ -2,7 +2,7 @@
 import { 
     COMMENT_LOADING_FAILURE, COMMENT_LOADING_REQUEST, COMMENT_LOADING_SUCCESS,
     COMMENT_UPLOADING_FAILURE, COMMENT_UPLOADING_REQUEST, COMMENT_UPLOADING_SUCCESS,
-    RECOMMENT_UPLOAD_REQUEST, RECOMMENT_UPLOAD_SUCCESS, RECOMMENT_UPLOAD_FAILURE,
+    RECOMMENT_UPLOAD_REQUEST, RECOMMENT_UPLOAD_SUCCESS, RECOMMENT_UPLOAD_FAILURE, COMMENT_EDIT_REQUEST, COMMENT_EDIT_SUCCESS, COMMENT_DELETE_FAILURE,
 } from '../types.js';
 
 
@@ -65,7 +65,6 @@ const reducer = (state = initialState, action) => {
         case RECOMMENT_UPLOAD_REQUEST:
             return {
                 ...state,
-                creatorId:'hohohoho',
                 loading: true,
             }
         case RECOMMENT_UPLOAD_SUCCESS: 
@@ -74,6 +73,27 @@ const reducer = (state = initialState, action) => {
                 loading: false,
             }
         case RECOMMENT_UPLOAD_FAILURE: 
+            return {
+                ...state,
+                loading: false,
+            }
+
+
+
+        // get comment api 만들어야됨
+        case COMMENT_EDIT_REQUEST:
+            return {
+                ...state,
+                creatorId:'comment edit succ',
+                loading: true,
+            }
+        case COMMENT_EDIT_SUCCESS: 
+            return {
+                ...state,
+                comments: action.data,
+                loading: false,
+            }
+        case COMMENT_DELETE_FAILURE: 
             return {
                 ...state,
                 loading: false,

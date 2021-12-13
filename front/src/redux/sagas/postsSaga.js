@@ -48,6 +48,7 @@ function uploadPostApi(data) {
     const token = localStorage.getItem('token')
     if(token) {
         config.headers["x-auth-token"] = token
+   
     }
 
     // console.log('이거 꼭 꼭: ', data, config)

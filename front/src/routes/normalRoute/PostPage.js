@@ -109,7 +109,7 @@ const PostPage = (req) => {
                         <div>
                             {Array.isArray(comments) ? comments.map( item => {
                                 return (
-                                    <CommentPage key={item._id} comments={item}/>
+                                    <CommentPage key={item._id} commentsList={item}/>
                                 )
                             }) : (
                                 <Fragment>
