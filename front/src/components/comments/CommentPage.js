@@ -12,15 +12,15 @@ const CommentPage = ({ commentsList }) => {
 
     const [ commentTogle, setCommentToggle ] = useState(false)
     const [ editToggle, setEditToggle] = useState(false)
-    const [ form, setValues ] = useState({ content: '', }); 
+    const [ form, setValues ] = useState({ content: commentsList.contents, }); 
 
 
     const dispatch = useDispatch();
     const { userId } = useSelector(state => state.user);
-    const { comments } = useSelector(state => state.comment);
+    // const { comments } = useSelector(state => state.comment);
     
 
-    // console.log(userId, comments, '에헿라라라라')
+    console.log(commentsList._id, '에헿라라라라')
 
     const handleCreateComment = useCallback(e => {
         setCommentToggle(!commentTogle)
@@ -52,6 +52,7 @@ const CommentPage = ({ commentsList }) => {
     return (
         <Fragment>
             <div>
+                <div>id: {commentsList._id}</div>
                 <div>작성자: {commentsList.creatorName ? commentsList.creatorName : commentsList.creator}</div>
                 <div>시간: {commentsList.date}</div>
                 <div>내용: {commentsList.contents}</div>
@@ -69,7 +70,7 @@ const CommentPage = ({ commentsList }) => {
                         <form>
                             <div>
                                 <label htmlFor="content">내용</label>
-                                <input id="content" name="content" type="text" onChange={handleEditChange} required />
+                                <input id="content" name="content" type="text" value={form.content} onChange={handleEditChange} required />
                             </div>
                             <button onClick={handleEditComment}>수정 완료</button>
                         </form>
