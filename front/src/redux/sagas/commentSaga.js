@@ -89,7 +89,7 @@ function editCommentApi(data) {
         config.headers["x-auth-token"] = token
     }
     // console.log('업로드 사가 데이터??', data)
-    return axios.post(`/api/post/comments/edit`, data, config)
+    return axios.post(`/api/post/comment/edit`, data, config)
 }
 
 

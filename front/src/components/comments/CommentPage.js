@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 
 import Recomment from '../../components/comments/ReComment.js'
+import { COMMENT_EDIT_REQUEST } from '../../redux/types.js'
 
 const CommentPage = ({ commentsList }) => {
 
@@ -44,6 +45,10 @@ const CommentPage = ({ commentsList }) => {
     }, [form.content])
     const handleEditComment = useCallback(e => {
         e.preventDefault();
+        dispatch({
+            type: COMMENT_EDIT_REQUEST,
+            data: { commentId: commentsList._id, content: form.content },
+        })
         console.log({ commentId: commentsList._id, contents: form.content,  })  // 보낼거까지 함...여기부터 
     }, [dispatch, form.content])
 
@@ -55,7 +60,21 @@ const CommentPage = ({ commentsList }) => {
                 <div>id: {commentsList._id}</div>
                 <div>작성자: {commentsList.creatorName ? commentsList.creatorName : commentsList.creator}</div>
                 <div>시간: {commentsList.date}</div>
-                <div>내용: {commentsList.contents}</div>
+                <div>내용: 
+                    {editToggle ? (
+                        <form>
+                            <div>
+                                {/* <label htmlFor="content">내용</label> */}
+                                <input id="content" name="content" type="text" value={form.content} onChange={handleEditChange} required />
+                            </div>
+                            <button onClick={handleEditComment}>수정 완료</button>
+                        </form>
+                    ) : (
+                        <div>
+                            {commentsList.contents}
+                        </div>
+                    )}
+                </div>
                 <div>
                     
                     {userId === commentsList.creator ? ( // 코멘트 리스트에 아이디와 지금 유저아이닥 같으면 수정삭제 보이기
@@ -66,15 +85,7 @@ const CommentPage = ({ commentsList }) => {
                         ) : null
                     }
 
-                    {editToggle && (
-                        <form>
-                            <div>
-                                <label htmlFor="content">내용</label>
-                                <input id="content" name="content" type="text" value={form.content} onChange={handleEditChange} required />
-                            </div>
-                            <button onClick={handleEditComment}>수정 완료</button>
-                        </form>
-                    )}
+                   
     
                 </div>
 

@@ -67,11 +67,12 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 loading: true,
             }
-        case RECOMMENT_UPLOAD_SUCCESS: 
+        case RECOMMENT_UPLOAD_SUCCESS: {
             return {
                 ...state,
                 loading: false,
             }
+        }
         case RECOMMENT_UPLOAD_FAILURE: 
             return {
                 ...state,
@@ -84,15 +85,21 @@ const reducer = (state = initialState, action) => {
         case COMMENT_EDIT_REQUEST:
             return {
                 ...state,
+                // comments: [],
                 creatorId:'comment edit succ',
                 loading: true,
             }
-        case COMMENT_EDIT_SUCCESS: 
+        case COMMENT_EDIT_SUCCESS:  {
+            const getData = action.data._id;
+            // console.log(action.data, 'state!!!') //수정된 코멘트
+            console.log(state.comments, 'reducer comments')
+            // 이거 내일 회사가서 하자 
             return {
                 ...state,
                 comments: action.data,
                 loading: false,
             }
+        }
         case COMMENT_DELETE_FAILURE: 
             return {
                 ...state,

@@ -189,7 +189,7 @@ router.get('/:id/comments', async(req, res) => {
 // @access   private
 router.post('/:id/comments', auth, async(req, res, next) => {
     try {
-        console.log(req.body, '레큐바디 아이디 !!!!!!!! 아오')
+        // console.log(req.body, '레큐바디 아이디 !!!!!!!! 아오')
         const createComment = await Comment.create({
             contents: req.body.contents,
             creator: req.body.userId,
@@ -224,8 +224,9 @@ router.post('/:id/comments', auth, async(req, res, next) => {
 router.post('/comment/edit', auth, async (req, res) => {
     // 작업전 정리 ..req.body : commentid contents  필요함 date는 서버에서.. (수정되었을 땐 date 수정됨 메시지도 같이 표시해야됨)
     try {
+        console.log(req.body, '코멘트 에디트')
         const findComment = await Comment.findByIdAndUpdate(req.body.commentId, {
-            contents: req.body.contents,
+            contents: req.body.content,
             date: moment().format('YYYY-MM-DD hh:mm:ss')
             
         },
@@ -328,7 +329,7 @@ router.get('/:id/edit', auth, async (req, res) => { // 수정전 해당 게시�
 // @desc     edit post
 // @access   private
 router.post('/:id/edit', auth, async(req, res, next) => {
-    console.log(req, '에딧에 req는 무엇인고 -_-')
+    // console.log(req, '에딧에 req는 무엇인고 -_-')
     const { body: { title, contents, fileUrl, id } } = req;
 
     try {
