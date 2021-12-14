@@ -49,8 +49,9 @@ const CommentPage = ({ commentsList }) => {
             type: COMMENT_EDIT_REQUEST,
             data: { commentId: commentsList._id, content: form.content },
         })
-        console.log({ commentId: commentsList._id, contents: form.content,  })  // 보낼거까지 함...여기부터 
-    }, [dispatch, form.content])
+        setEditToggle(false);
+        // console.log({ commentId: commentsList._id, contents: form.content,  })  // 보낼거까지 함...여기부터 
+    }, [dispatch, form.content, editToggle])
 
 
 
@@ -59,7 +60,7 @@ const CommentPage = ({ commentsList }) => {
             <div>
                 <div>id: {commentsList._id}</div>
                 <div>작성자: {commentsList.creatorName ? commentsList.creatorName : commentsList.creator}</div>
-                <div>시간: {commentsList.date}</div>
+                <div>시간: {commentsList.date} {commentsList.edit ? (<span>(수정됨)</span>) : null}</div>
                 <div>내용: 
                     {editToggle ? (
                         <form>
@@ -77,7 +78,7 @@ const CommentPage = ({ commentsList }) => {
                 </div>
                 <div>
                     
-                    {userId === commentsList.creator ? ( // 코멘트 리스트에 아이디와 지금 유저아이닥 같으면 수정삭제 보이기
+                    {userId === commentsList.creator && !editToggle ? ( // 코멘트 리스트에 아이디와 지금 유저아이닥 같으면 수정삭제 보이기
                         <div>
                             <button onClick={handleEditToggle}>수정</button>|
                             <button>삭제</button>

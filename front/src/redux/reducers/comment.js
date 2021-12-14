@@ -85,27 +85,35 @@ const reducer = (state = initialState, action) => {
         case COMMENT_EDIT_REQUEST:
             return {
                 ...state,
-                // comments: [],
                 creatorId:'comment edit succ',
                 loading: true,
+                edit: false,
             }
         case COMMENT_EDIT_SUCCESS:  {
-            const getData = state.comments.filter(item => item._id === action.data._id);
-            const hihi = state.comments.concat(getData)
-            console.log(hihi)
-            // console.log(action.data, 'state!!!') //수정된 코멘트
-            // console.log(state.comments, 'reducer comments')
-            // 이거 내일 회사가서 하자 
+            let idx = 0;
+            for(let i = 0; i < state.comments.length; i++) {
+                if(state.comments[i]._id === action.data._id) {
+                    idx = i
+                    break
+                }
+            }
+            state.comments.splice(idx, 1, {...action.data, edit: true},);
+            // console.log(idx)
+            // console.log(state.comments)
+            // console.log(action.data)
+           
             return {
                 ...state,
-                comments: action.data,
+                // comments: [...state.comments ], // ? 상태안바꾸고 해도되나 ..? 
                 loading: false,
+                
             }
         }
         case COMMENT_DELETE_FAILURE: 
             return {
                 ...state,
                 loading: false,
+                edit: false,
             }
             
     

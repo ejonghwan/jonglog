@@ -255,7 +255,7 @@ router.delete('/:id', auth, async(req, res) => {
             }
         })
 
-        const CategoryUpdate = await Category.findOneAndUpdate(
+        const CategoryUpdate = await Category.findOneAndUpdate( //category에서 지우기
             { posts: req.params.id }, 
             { $pull: { posts: req.params.id } },
             { new: true } //new 는 업데이트를 적용시켜줌 

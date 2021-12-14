@@ -61,9 +61,7 @@ const Comments = ({ postId, userId, userName }) => {
                     <button type="submit">comment</button>
                 </div>
             </form>
-            <form>
-                
-            </form>
+    
             
         </Fragment>
     )
