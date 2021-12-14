@@ -90,9 +90,11 @@ const reducer = (state = initialState, action) => {
                 loading: true,
             }
         case COMMENT_EDIT_SUCCESS:  {
-            const getData = action.data._id;
+            const getData = state.comments.filter(item => item._id === action.data._id);
+            const hihi = state.comments.concat(getData)
+            console.log(hihi)
             // console.log(action.data, 'state!!!') //수정된 코멘트
-            console.log(state.comments, 'reducer comments')
+            // console.log(state.comments, 'reducer comments')
             // 이거 내일 회사가서 하자 
             return {
                 ...state,
