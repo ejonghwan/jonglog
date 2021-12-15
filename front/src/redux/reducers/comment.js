@@ -2,7 +2,7 @@
 import { 
     COMMENT_LOADING_FAILURE, COMMENT_LOADING_REQUEST, COMMENT_LOADING_SUCCESS,
     COMMENT_UPLOADING_FAILURE, COMMENT_UPLOADING_REQUEST, COMMENT_UPLOADING_SUCCESS,
-    RECOMMENT_UPLOAD_REQUEST, RECOMMENT_UPLOAD_SUCCESS, RECOMMENT_UPLOAD_FAILURE, COMMENT_EDIT_REQUEST, COMMENT_EDIT_SUCCESS, COMMENT_DELETE_FAILURE,
+    RECOMMENT_UPLOAD_REQUEST, RECOMMENT_UPLOAD_SUCCESS, RECOMMENT_UPLOAD_FAILURE, COMMENT_EDIT_REQUEST, COMMENT_EDIT_SUCCESS, COMMENT_DELETE_FAILURE, COMMENT_DELETE_REQUEST, COMMENT_DELETE_SUCCESS, COMMENT_EDIT_FAILURE,
 } from '../types.js';
 
 
@@ -68,8 +68,11 @@ const reducer = (state = initialState, action) => {
                 loading: true,
             }
         case RECOMMENT_UPLOAD_SUCCESS: {
+
+
             return {
                 ...state,
+                comments: [...state.comments.recomment, action.data], //이거하다가 말았음 
                 loading: false,
             }
         }
@@ -80,14 +83,10 @@ const reducer = (state = initialState, action) => {
             }
 
 
-
-        // get comment api 만들어야됨
         case COMMENT_EDIT_REQUEST:
             return {
                 ...state,
-                creatorId:'comment edit succ',
                 loading: true,
-                edit: false,
             }
         case COMMENT_EDIT_SUCCESS:  {
             let idx = 0;
@@ -97,7 +96,8 @@ const reducer = (state = initialState, action) => {
                     break
                 }
             }
-            state.comments.splice(idx, 1, {...action.data, edit: true},);
+            // state.comments.splice(idx, 1, {...action.data, edit: true},);
+            state.comments.splice(idx, 1, {...action.data});
             // console.log(idx)
             // console.log(state.comments)
             // console.log(action.data)
@@ -109,13 +109,42 @@ const reducer = (state = initialState, action) => {
                 
             }
         }
+        case COMMENT_EDIT_FAILURE: 
+            return {
+                ...state,
+                loading: false,
+            }
+            
+
+
+        case COMMENT_DELETE_REQUEST:
+            return {
+                ...state,
+                creatorId:'comment edit succ',
+                loading: true,
+            }
+        case COMMENT_DELETE_SUCCESS:  {
+            let idx = 0;
+            for(let i = 0; i < state.comments.length; i++) {
+                if(state.comments[i]._id === action.data._id) {
+                    idx = i
+                    break
+                }
+            }
+            state.comments.splice(idx, 1, {...action.data});
+           
+            
+            return {
+                ...state,
+                loading: false,
+                
+            }
+        }
         case COMMENT_DELETE_FAILURE: 
             return {
                 ...state,
                 loading: false,
-                edit: false,
             }
-            
     
         default: return { ...state };
     }

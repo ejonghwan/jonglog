@@ -4,7 +4,7 @@ import axios from 'axios';
 import { 
     COMMENT_LOADING_FAILURE, COMMENT_LOADING_REQUEST, COMMENT_LOADING_SUCCESS, 
     COMMENT_UPLOADING_REQUEST, COMMENT_UPLOADING_SUCCESS, COMMENT_UPLOADING_FAILURE,
-    RECOMMENT_UPLOAD_REQUEST, RECOMMENT_UPLOAD_SUCCESS, RECOMMENT_UPLOAD_FAILURE, COMMENT_EDIT_SUCCESS, COMMENT_EDIT_FAILURE, COMMENT_EDIT_REQUEST, 
+    RECOMMENT_UPLOAD_REQUEST, RECOMMENT_UPLOAD_SUCCESS, RECOMMENT_UPLOAD_FAILURE, COMMENT_EDIT_SUCCESS, COMMENT_EDIT_FAILURE, COMMENT_EDIT_REQUEST, COMMENT_DELETE_REQUEST, COMMENT_DELETE_SUCCESS, COMMENT_DELETE_FAILURE, 
 } from '../types.js'
 
 
@@ -114,6 +114,42 @@ function* watchEditComment() {
 }
 
 
+// delete commnet
+function deleteCommentApi(data) {
+    const config = {
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }
+    // const token = data.token
+    const token = localStorage.getItem('token')
+    if(token) {
+        config.headers["x-auth-token"] = token
+    }
+    return axios.post(`/api/post/comment/delete`, data, config)
+}
+
+
+function* deleteComment(action) {
+    try {
+        const result = yield call(deleteCommentApi, action.data);
+        // console.log(result)
+        yield put({
+            type: COMMENT_DELETE_SUCCESS,
+            data: result.data
+        })
+    } catch(err) {
+        yield put({
+            type: COMMENT_DELETE_FAILURE,
+            data: err.response,
+        })
+    }
+}
+
+function* watchDeleteComment() {
+    yield takeEvery(COMMENT_DELETE_REQUEST, deleteComment)
+}
+
 
 
 
@@ -167,6 +203,7 @@ export default function* commentSaga() {
         fork(watchupLoadComment),
         fork(watchRecomment),
         fork(watchEditComment),
+        fork(watchDeleteComment),
     ])
 }
 

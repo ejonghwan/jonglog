@@ -4,7 +4,7 @@ import { RECOMMENT_UPLOAD_REQUEST, POST_DETAIL_LOADING_REQUEST, COMMENT_LOADING_
 
 
 
-const Recomment = ({ comments }) => {
+const Recomment = ({ commentsList, recommentToggle }) => {
 
     // console.log('asdasdasd', req)
 
@@ -19,27 +19,27 @@ const Recomment = ({ comments }) => {
         e.preventDefault();
         await dispatch({
             type: RECOMMENT_UPLOAD_REQUEST,
-            data: { userName: userName, contents: form.contents, commentId: comments._id, userId: userId, postId: comments.post},
+            data: { userName: userName, contents: form.contents, commentId: commentsList._id, userId: userId, postId: commentsList.post},
         })
-
+        recommentToggle(false) // toggle bool props 코멘트 페이지에 있음
 
         // 얘가 될때있고 안될때 있음 확인해야됨 그리고 왜 세개가 있어야 리다이렉트 되는건지도 ...
-        await dispatch({
-            type: POST_DETAIL_LOADING_REQUEST,
-            // data: params.id,
-            data: comments.post,
-        })
-        await dispatch({
-            type: USER_LOAD_REQUEST,
-            data: localStorage.getItem('token'),
-        })
-        await dispatch({
-            type: COMMENT_LOADING_REQUEST,
-            // data: params.id,
-            data: comments.post,
-        })
+        // await dispatch({
+        //     type: POST_DETAIL_LOADING_REQUEST,
+        //     // data: params.id,
+        //     data: commentsList.post,
+        // })
+        // await dispatch({
+        //     type: USER_LOAD_REQUEST,
+        //     data: localStorage.getItem('token'),
+        // })
+        // await dispatch({
+        //     type: COMMENT_LOADING_REQUEST,
+        //     // data: params.id,
+        //     data: commentsList.post,
+        // })
 
-        console.log({ userName: userName, contents: form.contents, commentId: comments._id})
+        // console.log({ userName: userName, contents: form.contents, commentId: commentsList._id})
     }
 
     const handleChange = e => {
@@ -48,7 +48,6 @@ const Recomment = ({ comments }) => {
             ...form,
             [e.target.name]: e.target.value
         })                   
-
         // console.log(form)
     }
 
@@ -58,7 +57,7 @@ const Recomment = ({ comments }) => {
         <Fragment>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <input type="text" onChange={handleChange} name="contents" required/>
+                    <input type="text" onChange={handleChange} name="contents" required />
                 </div>
                 <button type="submit">완료</button>
             </form>

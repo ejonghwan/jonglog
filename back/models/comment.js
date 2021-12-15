@@ -21,6 +21,13 @@ const CommentSchema = new mongoose.Schema({
     creatorName: {
         type: String,
     },
+    isEdit: {
+        type: Boolean,
+        default: false,
+    },
+    delete: {
+        type: Boolean,
+    },
     recomment: [{
         creator: {
             type: mongoose.Schema.Types.ObjectId,
@@ -41,6 +48,12 @@ const CommentSchema = new mongoose.Schema({
         date: {
             type: String,
             default: moment().format("YYYY-MM-DD hh:mm:ss")
+        },
+        recommentIsEdit: {
+            type: Boolean,
+        },
+        delete: {
+            type: Boolean,
         },
     }]
 })

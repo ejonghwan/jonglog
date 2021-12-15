@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 
 import Recomment from '../../components/comments/ReComment.js'
-import { COMMENT_EDIT_REQUEST } from '../../redux/types.js'
+import { COMMENT_EDIT_REQUEST, COMMENT_DELETE_REQUEST } from '../../redux/types.js'
 
 const CommentPage = ({ commentsList }) => {
 
@@ -21,7 +21,7 @@ const CommentPage = ({ commentsList }) => {
     // const { comments } = useSelector(state => state.comment);
     
 
-    console.log(commentsList._id, '에헿라라라라')
+    // console.log(commentsList._id, '에헿라라라라')
 
     const handleCreateComment = useCallback(e => {
         setCommentToggle(!commentTogle)
@@ -43,6 +43,7 @@ const CommentPage = ({ commentsList }) => {
         // console.log(content)
 
     }, [form.content])
+
     const handleEditComment = useCallback(e => {
         e.preventDefault();
         dispatch({
@@ -53,6 +54,16 @@ const CommentPage = ({ commentsList }) => {
         // console.log({ commentId: commentsList._id, contents: form.content,  })  // 보낼거까지 함...여기부터 
     }, [dispatch, form.content, editToggle])
 
+    const handleCommentDelete = useCallback( e => {
+        e.preventDefault();
+        if(window.confirm('정말 삭제할까요?')) {
+            dispatch({
+                type: COMMENT_DELETE_REQUEST,
+                data: { commentId: commentsList._id },
+            })
+        }
+    }, [dispatch])
+
 
 
     return (
@@ -60,7 +71,11 @@ const CommentPage = ({ commentsList }) => {
             <div>
                 <div>id: {commentsList._id}</div>
                 <div>작성자: {commentsList.creatorName ? commentsList.creatorName : commentsList.creator}</div>
-                <div>시간: {commentsList.date} {commentsList.edit ? (<span>(수정됨)</span>) : null}</div>
+                <div>
+                    시간: {commentsList.date} 
+                    {commentsList.delete ? (<span>(삭제됨)</span>) : null} 
+                    {commentsList.isEdit && !commentsList.delete ? (<span>(수정됨)</span>) : null}
+                </div>
                 <div>내용: 
                     {editToggle ? (
                         <form>
@@ -71,17 +86,17 @@ const CommentPage = ({ commentsList }) => {
                             <button onClick={handleEditComment}>수정 완료</button>
                         </form>
                     ) : (
-                        <div>
+                        <span>
                             {commentsList.contents}
-                        </div>
+                        </span>
                     )}
                 </div>
                 <div>
                     
-                    {userId === commentsList.creator && !editToggle ? ( // 코멘트 리스트에 아이디와 지금 유저아이닥 같으면 수정삭제 보이기
+                    {userId === commentsList.creator && !editToggle && !commentsList.delete ? ( // 코멘트 리스트에 아이디와 지금 유저아이닥 같으면 수정삭제 보이기
                         <div>
                             <button onClick={handleEditToggle}>수정</button>|
-                            <button>삭제</button>
+                            <button onClick={handleCommentDelete}>삭제</button>
                         </div>
                         ) : null
                     }
@@ -98,7 +113,7 @@ const CommentPage = ({ commentsList }) => {
                 })}
                 <br /><hr />
                 <button onClick={handleCreateComment}>댓글달기</button>
-                {commentTogle && <Recomment comments={commentsList}/>}
+                {commentTogle && <Recomment commentsList={commentsList} recommentToggle={setCommentToggle} />}
                
                 <br /><br />                
             </div>

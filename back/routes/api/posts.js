@@ -224,13 +224,34 @@ router.post('/:id/comments', auth, async(req, res, next) => {
 router.post('/comment/edit', auth, async (req, res) => {
     // 작업전 정리 ..req.body : commentid contents  필요함 date는 서버에서.. (수정되었을 땐 date 수정됨 메시지도 같이 표시해야됨)
     try {
-        console.log(req.body, '코멘트 에디트')
+        // console.log(req.body, '코멘트 에디트')
         const findComment = await Comment.findByIdAndUpdate(req.body.commentId, {
             contents: req.body.content,
-            date: moment().format('YYYY-MM-DD hh:mm:ss')
-            
+            date: moment().format('YYYY-MM-DD hh:mm:ss'),
+            isEdit: true,
         },
-        {new: true}
+            {new: true}
+        )
+        findComment.save();
+        res.status(200).json(findComment)
+    } catch(err) {
+        console.log(err)
+    }
+})
+
+// @routes   POST api/post/comment/delete
+// @desc     delete comment
+// @access   private
+router.post('/comment/delete', auth, async (req, res) => {
+    // 작업전 정리 ..req.body : commentid contents  필요함 date는 서버에서.. (수정되었을 땐 date 수정됨 메시지도 같이 표시해야됨)
+    try {
+        console.log(req.body, '코멘트 del')
+        const findComment = await Comment.findByIdAndUpdate(req.body.commentId, {
+            contents: '삭제됨',
+            date: moment().format('YYYY-MM-DD hh:mm:ss'),
+            delete: true,
+        },
+            {new: true}
         )
         findComment.save();
         res.status(200).json(findComment)
