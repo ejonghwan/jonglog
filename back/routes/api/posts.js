@@ -324,13 +324,41 @@ router.post('/comment/recomment', auth, async (req, res) => {
         )
 
         parentComment.save()
-        res.redirect(`/api/post/${req.body.postId}`);
-        // res.status(200).json(parentComment)
+        // res.redirect(`/api/post/${req.body.postId}`);
+        res.status(200).json(parentComment)
         
     } catch(err) {
         console.log(err)
     }
 })
+
+// @routes   PUT api/post/comment/recomment/edit
+// @desc     recomment edit
+// @access   private
+router.put('/comment/recomment/edit', async (req, res) => {
+    try {
+        console.log('리코멘트 에딧 서버: ', req.body)
+        const findComment = await Comment.findById(req.body.commentId)
+        findComment.recomment.map(item => {
+            console.log('hehehehehL: ', item._id === `new ObjectId("${req.body.recommentId}")`)
+        }) 
+        // const findRecomment = await findComment.recomment.findByIdAndUpdate(req.body.recommentId, {
+        //     $push: {
+        //         contents: req.body.contents,
+        //         recommentIsEdit: true,
+        //         date: moment().format("YYYY-MM-DD hh:mm:ss"),
+        //         delete: false,
+        //     }
+        // },
+        //     {new: true},
+        // )
+        // findRecomment.save();
+        // res.status(200).json(findRecomment) //이거 하다가 감 
+    } catch(err) {
+        console.log(err)
+    }
+})
+
 
 
 

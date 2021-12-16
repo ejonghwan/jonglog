@@ -2,7 +2,7 @@
 import { 
     COMMENT_LOADING_FAILURE, COMMENT_LOADING_REQUEST, COMMENT_LOADING_SUCCESS,
     COMMENT_UPLOADING_FAILURE, COMMENT_UPLOADING_REQUEST, COMMENT_UPLOADING_SUCCESS,
-    RECOMMENT_UPLOAD_REQUEST, RECOMMENT_UPLOAD_SUCCESS, RECOMMENT_UPLOAD_FAILURE, COMMENT_EDIT_REQUEST, COMMENT_EDIT_SUCCESS, COMMENT_DELETE_FAILURE, COMMENT_DELETE_REQUEST, COMMENT_DELETE_SUCCESS, COMMENT_EDIT_FAILURE,
+    RECOMMENT_UPLOAD_REQUEST, RECOMMENT_UPLOAD_SUCCESS, RECOMMENT_UPLOAD_FAILURE, COMMENT_EDIT_REQUEST, COMMENT_EDIT_SUCCESS, COMMENT_DELETE_FAILURE, COMMENT_DELETE_REQUEST, COMMENT_DELETE_SUCCESS, COMMENT_EDIT_FAILURE, RECOMMENT_EDIT_REQUEST, RECOMMENT_EDIT_SUCCESS, RECOMMENT_EDIT_FAILURE, RECOMMENT_DELETE_REQUEST, RECOMMENT_DELETE_SUCCESS, RECOMMENT_DELETE_FAILURE,
 } from '../types.js';
 
 
@@ -62,27 +62,6 @@ const reducer = (state = initialState, action) => {
         }
 
 
-        case RECOMMENT_UPLOAD_REQUEST:
-            return {
-                ...state,
-                loading: true,
-            }
-        case RECOMMENT_UPLOAD_SUCCESS: {
-
-
-            return {
-                ...state,
-                comments: [...state.comments.recomment, action.data], //이거하다가 말았음 
-                loading: false,
-            }
-        }
-        case RECOMMENT_UPLOAD_FAILURE: 
-            return {
-                ...state,
-                loading: false,
-            }
-
-
         case COMMENT_EDIT_REQUEST:
             return {
                 ...state,
@@ -133,7 +112,6 @@ const reducer = (state = initialState, action) => {
             }
             state.comments.splice(idx, 1, {...action.data});
            
-            
             return {
                 ...state,
                 loading: false,
@@ -145,6 +123,75 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
             }
+
+
+        // recomment upload
+        case RECOMMENT_UPLOAD_REQUEST:
+            return {
+                ...state,
+                loading: true,
+            }
+        case RECOMMENT_UPLOAD_SUCCESS: {
+            const commentList = state.comments.filter(val => val._id === action.data._id)
+            const dataRecomment = action.data.recomment;
+            const result = commentList[0].recomment = commentList[0].recomment.concat(dataRecomment[dataRecomment.length-1])
+
+            // console.log(result, 'ㄹㅣ듀서 코ㅐ트')
+            // console.log(recommentConcat, 'ㄹㅣ듀서 리코ㅐ트')
+            return {
+                ...state,
+                comments: [...state.comments], //이거하다가 말았음 
+                loading: false,
+            }
+        }
+        case RECOMMENT_UPLOAD_FAILURE:
+            return {
+                ...state,
+                loading: false,
+            }
+
+
+        // recomment edit
+        case RECOMMENT_EDIT_REQUEST:
+            return {
+                ...state,
+                loading: true,
+            }
+        case RECOMMENT_EDIT_SUCCESS: {
+            
+            return {
+                ...state,
+                loading: false,
+            }
+        }
+        case RECOMMENT_EDIT_FAILURE:
+            return {
+                ...state,
+                loading: false,
+            }
+
+
+        // recomment delete
+        case RECOMMENT_DELETE_REQUEST:
+            return {
+                ...state,
+                loading: true,
+            }
+        case RECOMMENT_DELETE_SUCCESS: {
+            
+            return {
+                ...state,
+                loading: false,
+            }
+        }
+        case RECOMMENT_DELETE_FAILURE:
+            return {
+                ...state,
+                loading: false,
+            }
+
+
+
     
         default: return { ...state };
     }

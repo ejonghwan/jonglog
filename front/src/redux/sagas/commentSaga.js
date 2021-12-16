@@ -4,7 +4,7 @@ import axios from 'axios';
 import { 
     COMMENT_LOADING_FAILURE, COMMENT_LOADING_REQUEST, COMMENT_LOADING_SUCCESS, 
     COMMENT_UPLOADING_REQUEST, COMMENT_UPLOADING_SUCCESS, COMMENT_UPLOADING_FAILURE,
-    RECOMMENT_UPLOAD_REQUEST, RECOMMENT_UPLOAD_SUCCESS, RECOMMENT_UPLOAD_FAILURE, COMMENT_EDIT_SUCCESS, COMMENT_EDIT_FAILURE, COMMENT_EDIT_REQUEST, COMMENT_DELETE_REQUEST, COMMENT_DELETE_SUCCESS, COMMENT_DELETE_FAILURE, 
+    RECOMMENT_UPLOAD_REQUEST, RECOMMENT_UPLOAD_SUCCESS, RECOMMENT_UPLOAD_FAILURE, COMMENT_EDIT_SUCCESS, COMMENT_EDIT_FAILURE, COMMENT_EDIT_REQUEST, COMMENT_DELETE_REQUEST, COMMENT_DELETE_SUCCESS, COMMENT_DELETE_FAILURE, RECOMMENT_EDIT_SUCCESS, RECOMMENT_EDIT_FAILURE, RECOMMENT_EDIT_REQUEST, 
 } from '../types.js'
 
 
@@ -175,7 +175,7 @@ function recommentApi(data) {
 function* recomment(action) {
     try {
         const result = yield call(recommentApi, action.data)
-        console.log('리코멘트 사과', result)
+        // console.log('리코멘트 사과', result)
         yield put({
             type: RECOMMENT_UPLOAD_SUCCESS,
             data: result.data
@@ -194,6 +194,45 @@ function* watchRecomment() {
 }
 
 
+// recomment edit
+function recommentEditApi(data) {
+    const config = {
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }
+    const token = localStorage.getItem('token');
+    if(token) {
+        config.headers['x-auth-token'] = token;
+    }
+    // console.log('리코멘트 리덕스 사가쪽 콘피그', config)
+
+    return axios.put(`/api/post/comment/recomment/edit`, data, config)
+}
+
+function* recommentEdit(action) {
+    try {
+        const result = yield call(recommentEditApi, action.data)
+        console.log('리코멘트 사과', result)
+        yield put({
+            type: RECOMMENT_EDIT_SUCCESS,
+            data: result.data
+        })
+        // yield put(push(`/post/${result.data.post}`)) 이거아이다
+    } catch(err) {
+        yield put({
+            type: RECOMMENT_EDIT_FAILURE,
+            data: err.msg
+        })
+        // yield put(push('/'))
+    }
+}
+function* watchRecommentEdit() {
+    yield takeEvery(RECOMMENT_EDIT_REQUEST, recommentEdit)
+}
+
+
+
 
 
 
@@ -204,6 +243,7 @@ export default function* commentSaga() {
         fork(watchRecomment),
         fork(watchEditComment),
         fork(watchDeleteComment),
+        fork(watchRecommentEdit),
     ])
 }
 

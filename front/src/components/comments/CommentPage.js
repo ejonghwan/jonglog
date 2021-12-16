@@ -1,15 +1,18 @@
 import React, { Fragment, useState, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-
-
-import Recomment from '../../components/comments/ReComment.js'
 import { COMMENT_EDIT_REQUEST, COMMENT_DELETE_REQUEST } from '../../redux/types.js'
+
+
+//components
+import Recomment from '../../components/comments/ReComment.js'
+import RecommentPage from '../../components/comments/RecommentPage.js'
+
+
+
 
 const CommentPage = ({ commentsList }) => {
 
     // { contents, creator, date, _id, creatorName, recomment }
-
-  
 
     const [ commentTogle, setCommentToggle ] = useState(false)
     const [ editToggle, setEditToggle] = useState(false)
@@ -65,6 +68,9 @@ const CommentPage = ({ commentsList }) => {
     }, [dispatch])
 
 
+   
+    
+
 
     return (
         <Fragment>
@@ -94,7 +100,7 @@ const CommentPage = ({ commentsList }) => {
                 <div>
                     
                     {userId === commentsList.creator && !editToggle && !commentsList.delete ? ( // 코멘트 리스트에 아이디와 지금 유저아이닥 같으면 수정삭제 보이기
-                        <div>
+                        <div>comment
                             <button onClick={handleEditToggle}>수정</button>|
                             <button onClick={handleCommentDelete}>삭제</button>
                         </div>
@@ -105,13 +111,13 @@ const CommentPage = ({ commentsList }) => {
     
                 </div>
 
-                {/* recomment */}
-                {commentsList.recomment && commentsList.recomment.map(({ userName, contents, date }) => {
-                    return (
-                        <div>{`이름 ${userName} |   ${contents} |   ${date}`}</div>
-                    )
+                {/* recomment view*/}
+                {commentsList.recomment && commentsList.recomment.map( item => {
+                    // console.log('gpgpgpgpgp', item)
+                    return <RecommentPage key={item._id} commentsList={commentsList} recommentItem={item} userId={userId} />
                 })}
                 <br /><hr />
+                {/* recomment form component */}
                 <button onClick={handleCreateComment}>댓글달기</button>
                 {commentTogle && <Recomment commentsList={commentsList} recommentToggle={setCommentToggle} />}
                

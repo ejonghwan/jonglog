@@ -21,25 +21,8 @@ const Recomment = ({ commentsList, recommentToggle }) => {
             type: RECOMMENT_UPLOAD_REQUEST,
             data: { userName: userName, contents: form.contents, commentId: commentsList._id, userId: userId, postId: commentsList.post},
         })
-        recommentToggle(false) // toggle bool props 코멘트 페이지에 있음
+        recommentToggle(false) // toggle bool state 코멘트 페이지에 있음 props로 내려줌
 
-        // 얘가 될때있고 안될때 있음 확인해야됨 그리고 왜 세개가 있어야 리다이렉트 되는건지도 ...
-        // await dispatch({
-        //     type: POST_DETAIL_LOADING_REQUEST,
-        //     // data: params.id,
-        //     data: commentsList.post,
-        // })
-        // await dispatch({
-        //     type: USER_LOAD_REQUEST,
-        //     data: localStorage.getItem('token'),
-        // })
-        // await dispatch({
-        //     type: COMMENT_LOADING_REQUEST,
-        //     // data: params.id,
-        //     data: commentsList.post,
-        // })
-
-        // console.log({ userName: userName, contents: form.contents, commentId: commentsList._id})
     }
 
     const handleChange = e => {
