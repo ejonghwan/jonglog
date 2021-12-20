@@ -167,7 +167,7 @@ function recommentApi(data) {
     if(token) {
         config.headers['x-auth-token'] = token;
     }
-    console.log('리코멘트 리덕스 사가쪽 콘피그', config)
+    // console.log('리코멘트 리덕스 사가쪽 콘피그', config)
 
     return axios.post(`/api/post/comment/recomment`, data, config)
 }

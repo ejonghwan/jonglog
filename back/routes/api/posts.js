@@ -303,7 +303,7 @@ router.delete('/:id', auth, async(req, res) => {
 router.post('/comment/recomment', auth, async (req, res) => {
     try {
 
-        console.log('대댓글 페이로드 : ', req.body )
+        // console.log('대댓글 페이로드 : ', req.body )
         // const creatorFind = await User.findOne({ _id: req.body.userId }) //얘 유저에 밀어넣어야됨 아직작업안함
         // console.log('작성자 찾기??', creatorFind) // 이거 할 필요 없음. 유저에 코멘트 아이디가 이미 들어가있어서 그거로 죠회하면 됨. 코멘트 table에 row이기 떄문
 
@@ -338,10 +338,14 @@ router.post('/comment/recomment', auth, async (req, res) => {
 router.put('/comment/recomment/edit', async (req, res) => {
     try {
         console.log('리코멘트 에딧 서버: ', req.body)
-        const findComment = await Comment.findById(req.body.commentId)
-        findComment.recomment.map(item => {
-            console.log('hehehehehL: ', item._id === `new ObjectId("${req.body.recommentId}")`)
-        }) 
+
+        const tlqkf = await Comment.findOne({ _id : req.body.comment}).findOne({ _id: req.body.recommentId })
+        console.log(tlqkf , "???????/ajwl" )
+
+        // 화면 리듀서 프론트 사가 작업함
+        // 1220 여기까지 했음 하 ..해결됐다 걍 연결해서 하면 되는구나 ㅡㅡ .... 블로그에 적혀있는거랑 쓰는 방법이 달랐음;; 공식문서를 보자...
+
+
         // const findRecomment = await findComment.recomment.findByIdAndUpdate(req.body.recommentId, {
         //     $push: {
         //         contents: req.body.contents,
