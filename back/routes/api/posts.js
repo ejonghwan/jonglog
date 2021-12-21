@@ -339,7 +339,7 @@ router.put('/comment/recomment/edit', async (req, res) => {
     try {
         console.log('리코멘트 에딧 서버: ', req.body)
 
-        const tlqkf = await Comment.findOne({ _id : req.body.comment}).findOne({ _id: req.body.recommentId })
+        const tlqkf = await Comment.findOne({ _id : req.body.commentId }).find({ recomment: { $in: {_id : req.body.recomment} } })
         console.log(tlqkf , "???????/ajwl" )
 
         // 화면 리듀서 프론트 사가 작업함
