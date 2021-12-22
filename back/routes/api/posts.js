@@ -344,6 +344,7 @@ router.put('/comment/recomment/edit', async (req, res) => {
 
         // 화면 리듀서 프론트 사가 작업함
         // 1220 여기까지 했음 하 ..해결됐다 걍 연결해서 하면 되는구나 ㅡㅡ .... 블로그에 적혀있는거랑 쓰는 방법이 달랐음;; 공식문서를 보자...
+        // 위에꺼 아직 안됨 211222 회사에서 커밋을 마지막으로 잠시스탑
 
 
         // const findRecomment = await findComment.recomment.findByIdAndUpdate(req.body.recommentId, {
