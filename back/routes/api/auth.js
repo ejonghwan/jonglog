@@ -16,7 +16,7 @@ const router = express.Router();
 
 
 // @routes   POST api/auth
-// @desc     Auth user
+// @desc     Auth user login
 // @access   public
 router.post('/', (req, res) => {
     const { email, password } = req.body;
@@ -33,6 +33,8 @@ router.post('/', (req, res) => {
         //유저가 있다면 패스워드 검증
         bcrypt.compare(password, user.password).then( isMatch => { //첫번째는 유저가 입력한 것. 두번째는 디비에서 찾은거 //컴페어값은 불린
             if(!isMatch) return res.status(400).json({ message: "비밀번호 불일치" })
+
+            // jwt return
             jwt.sign({ id:user.id }, JWT_SECRET, { expiresIn: "2 days" }, (err, token) => {
                 if(err) throw err;
                 res.json({
@@ -45,6 +47,7 @@ router.post('/', (req, res) => {
                     }
                 })
             })
+
         })
     })
 

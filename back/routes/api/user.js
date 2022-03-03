@@ -57,6 +57,7 @@ router.post('/', async(req, res) => {
                     if(err) throw err;
                     newUser.password = hash;
                     newUser.save().then( user => {
+                        
                         jwt.sign(
                             { id: user.id }, //첫번째 인자 아이디
                             JWT_SECRET, //두번째인자 시크릿 키 dotenv
@@ -74,6 +75,7 @@ router.post('/', async(req, res) => {
                                 
                             }
                         )
+
                     })
                 })
             })

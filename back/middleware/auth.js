@@ -15,6 +15,7 @@ const auth = (req, res, next) => {
         //토큰 해석
         const decoded = jwt.verify(token, JWT_SECRET);
         req.user = decoded;
+        // req.test = { token, JWT_SECRET }
         next() 
     } catch(err) {
         console.log(err)

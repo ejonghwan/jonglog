@@ -83,6 +83,8 @@ router.post('/', auth, uploadS3.none(), async (req, res, next) => {
     
     try {
         // console.log(req.user, '이거 꼭 확인 아이디 req')
+        // req.user는 auth에서 넣어줌 
+        console.log('post 레큐유저 1!!!!: ', req)
 
         const { title, contents, fileUrl, creator, category } = req.body; 
         const newPost = await Post.create({
